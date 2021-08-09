@@ -17,8 +17,8 @@
 			<tbody>
 				<tr th:if="${!#lists.isEmpty(cheats)}" th:each="cheat : ${cheats}"
 					th:object="${cheat}">
-					<td><h5 th:text="*{title}"></h5>
-						<span class="badge rounded-pill bg-secondary text-light">タグ（仮）TODO</span>
+					<td><h5 th:text="*{title}"></h5> <span
+						class="badge rounded-pill bg-secondary text-light">タグ（仮）TODO</span>
 						<div class="d-flex">
 							<a th:href="@{/edit(id=*{id})}" class="btn btn-light m-1">編集</a>
 							<form method="post" action="/delete">
@@ -27,7 +27,14 @@
 							</form>
 						</div></td>
 					<td class="p-0"><pre class="p-1 code prettyprint linenums"
-							th:text="*{code}"></pre> <pre class="p-2 detail" th:utext="*{escapeDetail}"></pre></td>
+							th:text="*{shortCode}"></pre>
+						<th:block th:if="*{codeOverflow}">
+							<div
+								th:replace="common/modal :: modal_fragment(body = ~{::.fullcode},id = *{id})">
+								<pre class="p-1 code fullcode prettyprint linenums"
+									th:text="*{code}"></pre>
+							</div>
+						</th:block> <pre class="p-2 detail" th:utext="*{escapeDetail}"></pre></td>
 				</tr>
 			</tbody>
 		</table>
