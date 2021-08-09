@@ -8,5 +8,9 @@ public class URL {
 
 	// redirect
 	public static final String REDIRECT_HOME = "redirect:/";
+	public static final String REDIRECT_ADD = "redirect:/add";
+	public static final String REDIRECT_EDIT = "redirect:/edit";
+	
+	public static final String LINK_REGEX = "(http://|https://){1}[\\w\\.\\-/:]+";
 
 }

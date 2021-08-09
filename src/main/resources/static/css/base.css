@@ -1,0 +1,25 @@
+.btn {
+	white-space: nowrap;
+}
+
+.prettyprint {
+	font-family: Menlo, Consolas, 'DejaVu Sans Mono', monospace!important;
+	white-space: pre-wrap;
+	font-size: 80%!important;
+}
+
+.prettyprint ol.linenums > li {
+	list-style-type: decimal;
+	color: #656d78!important;
+}
+
+table {
+width: 100%;
+table-layout: fixed;
+word-break: break-all;
+word-wrap: break-all;
+}
+
+.detail{
+	white-space: pre-wrap;
+}

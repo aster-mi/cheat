@@ -1,0 +1,29 @@
+<th:block xmlns:th="http://www.thymeleaf.org"
+	th:fragment="cheat_form_fragment(buttons)">
+	<div class="container">
+		<form class="w-30 mx-auto" method="post" th:object="${form}">
+			<div th:if="${errors!=null&&!errors.isEmpty()}"
+				th:each="error : ${errors}">
+				<div class="alert alert-danger m-1" th:text="${error.getField()+'は'+error.getDefaultMessage()}"></div>
+			</div>
+			<input type="text" th:field="*{id}" class="d-none"></input>
+			<div class="form-group">
+				<label>タイトル</label> <input class="form-control col-10" type="text"
+					th:field="*{title}" maxlength='50'></input>
+			</div>
+			<div class="form-group">
+				<label>コード</label>
+				<textarea class="prettyprint linenums form-control" rows="5" th:field="*{code}"></textarea>
+			</div>
+			<div class="form-group">
+				<label>詳細</label>
+				<textarea class="form-control" rows="5" th:field="*{detail}"></textarea>
+			</div>
+			<div class="btn-toolbar">
+				<!-- ボタン -->
+				<th:block th:replace="${buttons}" />
+			</div>
+		</form>
+	</div>
+</th:block>
+

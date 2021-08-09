@@ -1,0 +1,13 @@
+<head xmlns:th="http://www.thymeleaf.org" th:fragment="head_fragment(title)">
+  <meta charset="UTF-8">
+  <title th:text="${title}"></title>
+  <!-- 全画面共通のcssを定義します -->
+  <link th:href="@{/css/base.css}" rel="stylesheet">
+  <!-- 全画面共通のscriptを定義します -->
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+  <!-- bootstrap -->
+  <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+</head>
