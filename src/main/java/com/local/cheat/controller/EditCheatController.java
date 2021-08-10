@@ -25,9 +25,9 @@ public class EditCheatController {
 
 	@Autowired
 	private CheatService service;
-
-	@GetMapping
-	public CheatMAV index(CheatMAV mav, @RequestParam("id") Integer id) {
+	
+	@PostMapping
+	public CheatMAV delete(CheatMAV mav, @RequestParam("id") Integer id) {
 		var model = mapper.selectById(id);
 		mav.addObject("form", service.modelToForm(model));
 		mav.setViewName(URL.EDIT);
