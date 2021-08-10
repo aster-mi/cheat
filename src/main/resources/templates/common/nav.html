@@ -1,13 +1,18 @@
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="nav_fragment">
 	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid">
-			<a class="btn btn-info stretched-link" th:href="@{/}">Top</a>
+			<a class="btn fs-1 btn-secondary" th:href="@{/}">Code Cheat!</a>
+			<div class="d-grid gap-2 col-6 mx-auto">
+				<a class="btn btn-outline-dark fs-3" th:href="@{/add}"><i
+					class="fas fa-plus"></i></a>
+			</div>
 			<form th:action="@{/search}" class="d-flex" method="get">
 				<input name="q" class="form-control me-2" type="text"
 					placeholder="Search cheat...">
-				<button class="btn btn-outline-success" type="submit">検索</button>
+				<button class="btn btn-outline-dark" type="submit">
+					<i class="fas fa-search"></i>
+				</button>
 			</form>
-			<a class="btn btn-primary stretched-link" th:href="@{/add}">+</a>
 		</div>
 	</nav>
 </th:block>

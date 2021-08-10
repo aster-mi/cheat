@@ -25,7 +25,7 @@ public interface CheatMapper {
 	@Select("select * from cheat order by id desc")
 	List<Cheat> selectAll();
 	
-	@Select("select * from cheat where title like '%'||#{word}||'%' or code like '%'||#{word}||'%' or detail like '%'||#{word}||'%'")
+	@Select("select * from cheat where title like '%'||#{word}||'%' or code like '%'||#{word}||'%' or detail like '%'||#{word}||'%' order by id desc")
 	List<Cheat> search(String word);
 	
 	@Select("select * from cheat where id=#{id}")

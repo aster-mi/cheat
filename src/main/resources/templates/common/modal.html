@@ -1,7 +1,7 @@
 <th:block xmlns:th="http://www.thymeleaf.org"
 	th:fragment="modal_fragment(body, id)">
-	<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-		th:data-bs-target="'#modal' + ${id}">+全表示+</button>
+	<p class="expansion p-2 m-0 text-center container-fluid position-absolute bottom-0 end-0 flow-text rounded-bottom" data-bs-toggle="modal"
+		th:data-bs-target="'#modal' + ${id}">全文表示</p>
 	<div class="modal fade" th:id="'modal' + ${id}" tabindex="-1"
 		th:aria-labelledby="${id}" aria-hidden="true">
 		<div
@@ -13,7 +13,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">閉じる</button>
-					<button type="button" class="btn btn-primary">コピー（TODO）</button>
+					<button type="button" class="btn btn-primary" th:onclick="'copyToClipboard(code' + ${id} + ')'">コピー（TODO）</button>
 				</div>
 			</div>
 		</div>

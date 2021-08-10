@@ -18,7 +18,7 @@ public class Cheat {
 	private String detail;
 	
 	public String getEscapeDetail() {
-		return EscapeUtil.htmlEscape(detail).replaceAll(URL.LINK_REGEX,"<a href='$0'>$0</a>");
+		return EscapeUtil.htmlEscape(detail).replaceAll(URL.LINK_REGEX,"<a href='$0' target='_blank' rel='noopener noreferrer'>$0</a>");
 	}
 	
 	public boolean isCodeOverflow() {

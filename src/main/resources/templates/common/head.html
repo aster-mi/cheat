@@ -14,7 +14,20 @@
 	crossorigin="anonymous"></script>
 <!-- 全画面共通のcssを定義します -->
 <link th:href="@{/css/base.css}" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
 <!-- 全画面共通のscriptを定義します -->
 <script
 	src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+	
+	<!-- copy -->
+    <script>
+    // TODO
+        function copyToClipboard(id) {
+            // コピー対象をJavaScript上で変数として定義する
+            var text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            // コピーをお知らせする
+            alert("コピー");
+        }
+    </script>
 </head>

@@ -16,10 +16,10 @@ public class CheatForm {
 	private String title;
 	
 	@NotEmpty
-	@Size(max=3000)
+	@Size(max=10000)
 	private String code;
 	
-	@Size(max=3000)
+	@Size(max=10000)
 	private String detail;
 	
 }
