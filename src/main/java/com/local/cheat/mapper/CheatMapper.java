@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.data.domain.Pageable;
 
+import com.local.cheat.form.SearchForm;
 import com.local.cheat.model.Cheat;
 
 @Mapper
@@ -20,15 +22,20 @@ public interface CheatMapper {
 	void update(Cheat model);
 	
 	@Delete("delete from cheat where id=#{id}")
-	int delete(Cheat model);
+	int delete(Integer id);
 	
-	@Select("select * from cheat order by id desc")
-	List<Cheat> selectAll();
+	@Select("select * from cheat order by id desc limit #{pageSize} offset #{offset}")
+	List<Cheat> selectAll(Pageable pageable);
 	
-	@Select("select * from cheat where title like '%'||#{word}||'%' or code like '%'||#{word}||'%' or detail like '%'||#{word}||'%' order by id desc")
-	List<Cheat> search(String word);
+	@Select("select count(*) from cheat")
+	int selectAllCount();
+	
+	@Select("select * from cheat where title like '%'||#{form.q}||'%' or code like '%'||#{form.q}||'%' or detail like '%'||#{form.q}||'%' order by id desc limit #{pageable.pageSize} offset #{pageable.offset}")
+	List<Cheat> search(Pageable pageable,SearchForm form);
+	
+	@Select("select count(*) from cheat where title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%'")
+	int searchCount(SearchForm form);
 	
 	@Select("select * from cheat where id=#{id}")
 	Cheat selectById(Integer id);
-	
 }

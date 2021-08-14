@@ -5,45 +5,188 @@
 <body>
 	<!-- nav -->
 	<div th:replace="common/nav :: nav_fragment"></div>
-	<div class="container-xxl">
-		<table class="table table-striped table-bordered table-secondary m-1">
-			<thead class="table-dark">
-				<tr>
-					<th scope="col" class="col-2">タイトル</th>
-					<th scope="col" class="col-9">コード・メモ</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:if="${!#lists.isEmpty(cheats)}" th:each="cheat : ${cheats}"
-					th:object="${cheat}">
-					<td><h5 th:text="*{title}"></h5> <span
-						class="badge rounded-pill bg-secondary text-light">タグ（仮）TODO</span>
-						<form method="post">
-							<input class="d-none" type="text" name="id" th:value="*{id}"></input>
-							<div class="mt-1 bg-white rounded btn-group">
-								<button type="submit" formaction="/edit"
-									class="btn btn-outline-info">編集</button>
-								<!-- TODO -->
-								<button class="btn btn-outline-secondary">共有</button>
-								<button type="submit" formaction="/delete"
-									class="btn btn-outline-danger">削除</button>
+
+	<div class="container-xl">
+		<div class="d-flex flex-row">
+		
+			<!-- サイドバー -->
+			<aside class="d-flex flex-column border-end sticky-top align-self-start">
+				
+				<!-- 追加ボタン -->
+				<a class="btn btn-outline-success rounded-pill m-3" th:href="@{/add}">
+					<i class="fas fa-plus"></i> <span class="p-3 fw-bold">新規作成</span>
+				</a>
+				
+				<!-- タグ一覧 -->
+				<th:block th:each="tag : ${tags}">
+					<a class="text-secondary mt-3" href="#"> <i class="fas fa-tags"></i><span
+						class="fs-4" th:text="${tag}"></span>
+					</a>
+				</th:block>
+				
+				<!-- ユーザー情報 -->
+				<div class="d-flex position-relative align-items-center mt-auto p-1 user-info">
+					<!-- アイコン -->
+					<div>
+						<i class="fas fa-user-circle fa-2x"></i>
+					</div>
+					<!-- 名前・ID -->
+					<div>
+						<div class="ps-1 fw-bold"
+							th:text="${#httpServletRequest.remoteUser}"></div>
+						<div class="text-secondary">@okok_ganbarou</div>
+					</div>
+					<!-- ドロップダウン -->
+					<div class="align-self-start">
+						<a class="btn stretched-link" type="button" id="MenuUser"
+							data-bs-toggle="dropdown" aria-expanded="false"> <i
+							class="fas fa-ellipsis-v fa-sm text-secondary"></i>
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="MenuUser">
+							<li><button type="submit" formaction="/edit"
+									class="btn btn-link dropdown-item">
+									<i class="fas fa-edit text-secondary p-1"></i>XXX
+								</button></li>
+							<li><button type="submit" formaction="/"
+									class="btn btn-link dropdown-item">
+									<i class="fas fa-share text-secondary p-1"></i>XXX
+								</button></li>
+							<li><hr class="dropdown-divider"></li>
+							<!-- ログアウトボタン -->
+							<li>
+								<form th:action="@{/logout}" method="post">
+									<input class="btn btn-link dropdown-item" type="submit"
+										th:value="${#httpServletRequest.remoteUser}+'からログアウト'" />
+								</form>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+			</aside>
+			
+			<!-- 一覧 -->
+			<main class="col-10">
+				<!-- データが無い場合 -->
+				<div class="text-center" th:unless="${cheats != null and cheats.getContent().size() > 0}">
+					<div class="m-5 text-secondary faa-float animated">
+						<div>
+							<i class="fas fa-question fa-2x faa-shake animated"></i>
+						</div>
+						<div>
+							<i class="fas fa-ghost fa-5x"></i>
+						</div>
+					</div>
+					<div th:if="${@URL.HOME.equals(currentUrl)}">
+						<a class="m-2 btn btn-outline-success rounded-pill m-3" th:href="@{/add}">
+							<i class="fas fa-plus"></i> <span class="p-3 fw-bold">新規作成</span>
+						</a>
+						<div class="text-secondary">データが存在しないようです</div>
+						<div class="text-secondary">上のボタンからコードを追加してみよう！</div>
+					</div>
+					<div class="text-secondary" th:if="${@URL.SEARCH.equals(currentUrl)}" 
+						th:text="${#httpServletRequest.getParameter('q')+' に一致する結果は見つかりませんでした'}">
+					</div>
+				</div>
+				<!-- データがある場合 -->
+				<div th:if="${cheats != null and cheats.getContent().size() > 0}">
+					<div class="text-center p-2">
+						<span class="text-secondary" th:text="${cheats.number+1}+'/'+${cheats.totalPages}+'ページ'"></span>
+					     <span class="text-secondary" th:text="'（全'+${cheats.totalElements}+'件）'"></span>
+					</div>
+					<div class="border-top p-3" th:each="cheat : ${cheats}" th:object="${cheat}">
+						<div class="p-1 btn-toolbar justify-content-between">
+							<div class="d-flex">
+								<i class="fas fa-user-circle fa-2x"></i> <span
+									class="ps-1 fw-bold fs-6" th:text="${#httpServletRequest.remoteUser}"></span> <span
+									class="fs-6 text-secondary">@okok_ganbarou</span>
 							</div>
-						</form></td>
-					<td class="p-1">
-						<div class="container-fluid p-0 m-0 position-relative">
-							<pre class="m-0 p-1 code prettyprint linenums rounded"
-								th:text="*{shortCode}"></pre>
-							<th:block th:if="*{codeOverflow}">
-								<div
-									th:replace="common/modal :: modal_fragment(body = ~{::.fullcode},id = *{id})">
-									<pre class="p-1 code fullcode prettyprint linenums rounded"
-										th:text="*{code}" th:id="'code'+ *{id}"></pre>
+							<form method="post">
+								<input class="d-none" type="text" name="id" th:value="*{id}"></input>
+								<!-- データ操作ボタン -->
+								<div class="dropdown">
+									<button class="btn ml-auto hover-action" type="button"
+										th:id="'MenuButton' + *{id}" data-bs-toggle="dropdown"
+										aria-expanded="false">
+										<i class="fas fa-ellipsis-v text-secondary"></i>
+									</button>
+									<ul class="dropdown-menu"
+										th:aria-labelledby="'MenuButton' + *{id}">
+										<li><button type="submit" formaction="/edit"
+												class="btn btn-link dropdown-item">
+												<i class="fas fa-edit text-secondary p-1"></i>編集
+											</button></li>
+										<li><button type="submit" formaction="/"
+												class="btn btn-link dropdown-item">
+												<i class="fas fa-share text-secondary p-1"></i>共有
+											</button></li>
+										<li><hr class="dropdown-divider"></li>
+										<li><button type="submit" formaction="/delete"
+												class="btn btn-link dropdown-item">
+												<i class="fas fa-trash-alt text-danger p-1"></i>削除
+											</button></li>
+									</ul>
 								</div>
-						</div> </th:block> <pre class="p-2 detail" th:utext="*{escapeDetail}"></pre>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+							</form>
+						</div>
+						<div class="col-11 mx-auto">
+							<span th:text="*{title}" class="fs-5 fw-bold"></span>
+							<pre class="text-break m-0 detail" th:utext="*{escapeDetail}"></pre>
+							<div>
+								<div class="badge rounded-pill bg-secondary">Java</div>
+								<div class="container-fluid p-0 m-0 position-relative">
+									<pre
+										class="m-0 p-1 code prettyprint linenums rounded text-break"
+										th:text="*{shortCode}"></pre>
+									<th:block th:if="*{codeOverflow}">
+										<div
+											th:replace="common/modal :: modal_fragment(body = ~{::.fullcode},id = *{id})">
+											<pre
+												class="p-1 code fullcode prettyprint linenums rounded text-break"
+												th:text="*{code}" th:id="'code'+ *{id}"></pre>
+										</div>
+									</th:block>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- ページネーション -->
+				<th:block th:if="${cheats != null and cheats.getContent().size() > 0 and cheats.totalPages > 1}">
+			        <nav aria-label="Page navigation" class="d-flex justify-content-center">
+							<ul class="pagination">
+
+								<li
+									th:class="${cheats.first} ? 'page-item disabled':'page-item'">
+									<a class="page-link" th:href="@{${currentUrl}(page=0)}">最初</a>
+								</li>
+
+								<li th:unless="${cheats.number} - 6 < 0">・・・</li>
+
+								<li th:each='i : ${#numbers.sequence(0, cheats.totalPages -1)}'
+									th:class="(${i} == ${cheats.number})? 'page-item active' : 'page-item'">
+
+									<a
+									th:if="(${cheats.number} - 6 < ${i}) and (${cheats.number} + 6 > ${i})"
+									class="page-link" th:href="@{${currentUrl}(page=${i})}"> <span
+										th:text='${i+1}'>replace</span>
+								</a>
+
+								</li>
+
+								<li th:unless="${cheats.number} + 6 > (${cheats.totalPages} - 1)">・・・</li>
+
+								<li th:class="${cheats.last} ? 'page-item disabled':'page-item'">
+									<a class="page-link"
+									th:href="@{${currentUrl}(page=(${cheats.totalPages} -1))}">最後</a>
+								</li>
+							</ul>
+
+						</nav>
+			    </th:block>
+			</main>
+		</div>
 	</div>
 </body>
 </html>

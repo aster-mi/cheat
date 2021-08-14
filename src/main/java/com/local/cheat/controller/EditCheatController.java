@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +29,7 @@ public class EditCheatController {
 	public CheatMAV delete(CheatMAV mav, @RequestParam("id") Integer id) {
 		var model = mapper.selectById(id);
 		mav.addObject("form", service.modelToForm(model));
-		mav.setViewName(URL.EDIT);
+		mav.setViewName(URL.TEMPLATE_EDIT);
 		return mav;
 	}
 
@@ -39,7 +38,7 @@ public class EditCheatController {
 		if (bindingResult.hasErrors()) {
 			mav.addObject("form",form);
 			mav.addObject("errors",bindingResult.getFieldErrors());
-			mav.setViewName(URL.EDIT);
+			mav.setViewName(URL.TEMPLATE_EDIT);
 		} else {
 			mapper.update(service.formToModel(form));
 			mav.setViewName(URL.REDIRECT_HOME);
@@ -49,7 +48,7 @@ public class EditCheatController {
 
 	@PostMapping("delete")
 	public CheatMAV delete(CheatMAV mav, @ModelAttribute CheatForm form) {
-		mapper.delete(service.formToModel(form));
+		service.delete(form.getId());
 		mav.setViewName(URL.REDIRECT_HOME);
 		return mav;
 	}

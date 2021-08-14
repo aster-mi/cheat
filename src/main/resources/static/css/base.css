@@ -1,3 +1,23 @@
+aside {
+	height: calc(100vh - 100px)!important;
+	top: 71px!important;
+}
+.box-shadow-under {
+	box-shadow: 0px 10px 10px -5px rgba(0,0,0,0.3);
+}
+.hover-action:hover , .stretched-link:hover::after {
+	background-color: rgba(100, 100, 100, 0.1) !important;
+	border-radius: 50rem !important;
+}
+
+.hover-action {
+	border-radius: 50rem !important;
+}
+
+.dropdown-menu {
+	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .6);
+}
+
 .btn {
 	white-space: nowrap;
 }
@@ -29,16 +49,15 @@ table {
 	border: none;
 	cursor: pointer;
 	outline: none;
-	text-shadow: 1px 0 0 black, 0 1px 0 black, -1px 0 0 black, 0 -1px 0	black;
+	text-shadow: 1px 0 0 black, 0 1px 0 black, -1px 0 0 black, 0 -1px 0
+		black;
 }
 
-.flow-text{
-  display     : inline-block;
-  font-size   : 130%;
-  font-weight : bold;
-  color       : #ffffff;
-  text-shadow:  2px  2px 10px #777 ,
-               -2px  2px 10px #777 ,
-                2px -2px 10px #777 ,
-               -2px -2px 10px #777;
+.flow-text {
+	display: inline-block;
+	font-size: 130%;
+	font-weight: bold;
+	color: #ffffff;
+	text-shadow: 2px 2px 10px #777, -2px 2px 10px #777, 2px -2px 10px #777,
+		-2px -2px 10px #777;
 }

@@ -11,15 +11,15 @@ public class CheatForm {
 	
 	private Integer id;
 	
-	@NotEmpty
-	@Size(max=50)
+	@NotEmpty(message = "タイトルを入力してください。")
+	@Size(max=50,message="タイトルは50文字以内に設定してください。")
 	private String title;
 	
-	@NotEmpty
+	@NotEmpty(message = "コードを入力してください。")
 	@Size(max=10000)
 	private String code;
 	
-	@Size(max=10000)
+	@Size(max=10000,message="詳細は1万文字以内に設定してください。")
 	private String detail;
 	
 }

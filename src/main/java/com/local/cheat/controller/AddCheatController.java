@@ -6,7 +6,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,7 +29,7 @@ public class AddCheatController {
 	public CheatMAV index(CheatMAV mav) {
 		var form = new CheatForm();
 		mav.addObject("form", form);
-		mav.setViewName(URL.ADD);
+		mav.setViewName(URL.TEMPLATE_ADD);
 		return mav;
 	}
 
@@ -39,7 +38,7 @@ public class AddCheatController {
 		if (bindingResult.hasErrors()) {
 			mav.addObject("form", form);
 			mav.addObject("errors", bindingResult.getFieldErrors());
-			mav.setViewName(URL.ADD);
+			mav.setViewName(URL.TEMPLATE_ADD);
 		} else {
 			mapper.insert(service.formToModel(form));
 			mav.setViewName(URL.REDIRECT_HOME);

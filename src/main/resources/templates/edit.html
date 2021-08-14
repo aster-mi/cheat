@@ -5,10 +5,12 @@
 <body>
 	<!-- nav -->
 	<div th:replace="common/nav :: nav_fragment"></div>
-	<div
-		th:replace="common/cheat_form :: cheat_form_fragment(buttons = ~{::button})">
-		<button formaction="/edit/submit" class="btn btn-success">完了</button>
-		<button formaction="/edit/delete" class="btn btn-danger ml-auto">削除</button>
+	<div class="container-md">
+		<div
+			th:replace="common/cheat_form :: cheat_form_fragment(buttons = ~{::button})">
+			<button formaction="/edit/submit" class="btn btn-success">完了</button>
+			<button formaction="/edit/delete" class="btn btn-danger ml-auto">削除</button>
+		</div>
 	</div>
 </body>
 </html>
