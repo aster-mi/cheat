@@ -1,10 +1,11 @@
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="nav_fragment">
-	<nav class="navbar navbar-light bg-success sticky-xl-top box-shadow-under">
+	<nav class="navbar navbar-light bg-success sticky-top box-shadow-under navbar-expand-md">
 		<div class="container-md">
 			<div>
 				<a class="btn p-0 fw-bold text-light fs-3" th:href="@{/}"><i class="fas fa-ghost me-1"></i>CodeCheat</a>
 			</div>
-			<form class="d-flex">
+			<!-- 検索ボタン -->
+			<form class="d-flex d-none d-md-block">
 				<div class="input-group">
 					<input name="q" class="form-control" type="text"
 						placeholder="Search code..." aria-describedby="search-button"
@@ -15,6 +16,37 @@
 					</button>
 				</div>
 			</form>
+			<!-- ハンバーガー -->
+			<div class="d-md-none">
+			    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav-bar" aria-controls="nav-bar" aria-expanded="false" aria-label="Toggle navigation">
+			        <span class="navbar-toggler-icon"></span>
+			    </button>
+			</div>
 		</div>
 	</nav>
+	<!-- ハンバーガーの中身 -->
+	<div class="collapse navbar-collapse" id="nav-bar">
+		<div class="navbar-nav">
+			<!-- 検索 -->
+			<div class="nav-item">
+				<form>
+					<div class="input-group p-3">
+						<input name="q" class="form-control" type="text"
+							placeholder="Search code..." aria-describedby="search-button"
+							th:value="${#httpServletRequest.getParameter('q')}">
+						<button formtarget="get" th:formaction="@{/search}"
+							class="btn btn-success" type="submit" id="search-button">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+				</form>
+			</div>
+			<!-- 追加ボタン -->
+			<div class="nav-item d-flex justify-content-center">
+				<a class="btn btn-outline-success rounded-pill m-3 col-6" th:href="@{/add}">
+					<i class="fas fa-plus"></i> <span class="p-3 fw-bold">新規作成</span>
+				</a>
+			</div>
+		</div>
+	</div>
 </th:block>

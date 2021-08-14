@@ -6,11 +6,10 @@
 	<!-- nav -->
 	<div th:replace="common/nav :: nav_fragment"></div>
 
-	<div class="container-xl">
-		<div class="d-flex flex-row">
+	<div class="container-xl d-flex flex-row">
 		
 			<!-- サイドバー -->
-			<aside class="d-flex flex-column border-end sticky-top align-self-start">
+			<aside class="d-none d-md-block d-flex flex-column col-2 border-end sticky-top align-self-start">
 				
 				<!-- 追加ボタン -->
 				<a class="btn btn-outline-success rounded-pill m-3" th:href="@{/add}">
@@ -19,9 +18,13 @@
 				
 				<!-- タグ一覧 -->
 				<th:block th:each="tag : ${tags}">
-					<a class="text-secondary mt-3" href="#"> <i class="fas fa-tags"></i><span
-						class="fs-4" th:text="${tag}"></span>
-					</a>
+					<ul class="list-unstyled">
+						<li>
+							<a class="text-secondary" href="#"> <i
+								class="fas fa-tags"></i><span class="fs-4" th:text="${tag}"></span>
+							</a>
+						</li>
+					</ul>
 				</th:block>
 				
 				<!-- ユーザー情報 -->
@@ -34,7 +37,7 @@
 					<div>
 						<div class="ps-1 fw-bold"
 							th:text="${#httpServletRequest.remoteUser}"></div>
-						<div class="text-secondary">@okok_ganbarou</div>
+						<div class="text-secondary">@12345678</div>
 					</div>
 					<!-- ドロップダウン -->
 					<div class="align-self-start">
@@ -66,7 +69,7 @@
 			</aside>
 			
 			<!-- 一覧 -->
-			<main class="col-10">
+			<main class="d-flex flex-column col-md-10 col-12">
 				<!-- データが無い場合 -->
 				<div class="text-center" th:unless="${cheats != null and cheats.getContent().size() > 0}">
 					<div class="m-5 text-secondary faa-float animated">
@@ -99,7 +102,7 @@
 							<div class="d-flex">
 								<i class="fas fa-user-circle fa-2x"></i> <span
 									class="ps-1 fw-bold fs-6" th:text="${#httpServletRequest.remoteUser}"></span> <span
-									class="fs-6 text-secondary">@okok_ganbarou</span>
+									class="fs-6 text-secondary">@12345678</span>
 							</div>
 							<form method="post">
 								<input class="d-none" type="text" name="id" th:value="*{id}"></input>
@@ -182,11 +185,9 @@
 									th:href="@{${currentUrl}(page=(${cheats.totalPages} -1))}">最後</a>
 								</li>
 							</ul>
-
 						</nav>
 			    </th:block>
 			</main>
 		</div>
-	</div>
 </body>
 </html>
