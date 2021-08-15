@@ -15,27 +15,25 @@ import com.local.cheat.model.Cheat;
 @Mapper
 public interface CheatMapper {
 
-	@Insert("insert into cheat(title, code, detail) values(#{title}, #{code}, #{detail})")
+	@Insert("insert into cheat(user_id, tag_id, title, code, detail) values(#{userId},#{tagId}, #{title}, #{code}, #{detail})")
 	void insert(Cheat model);
 	
-	@Update("update cheat set title=#{title}, code=#{code}, detail=#{detail} where id=#{id}")
+	@Update("update cheat set set tag_id=#{tagId} title=#{title}, code=#{code}, detail=#{detail} where id=#{id} and user_id=#{userId}")
 	void update(Cheat model);
 	
-	@Delete("delete from cheat where id=#{id}")
-	int delete(Integer id);
+	@Delete("delete from cheat where id=#{id} and user_id=#{userId}")
+	int delete(Integer id, Integer userId);
 	
-	@Select("select * from cheat order by id desc limit #{pageSize} offset #{offset}")
-	List<Cheat> selectAll(Pageable pageable);
+	@Select("select * from cheat where user_id=#{userId} order by id desc limit #{pageable.pageSize} offset #{pageable.offset}")
+	List<Cheat> selectAll(Pageable pageable,Integer userId);
 	
-	@Select("select count(*) from cheat")
-	int selectAllCount();
+	@Select("select count(*) from cheat where user_id=#{userId}")
+	int selectAllCount(Integer userId);
 	
-	@Select("select * from cheat where title like '%'||#{form.q}||'%' or code like '%'||#{form.q}||'%' or detail like '%'||#{form.q}||'%' order by id desc limit #{pageable.pageSize} offset #{pageable.offset}")
-	List<Cheat> search(Pageable pageable,SearchForm form);
+	List<Cheat> search(Pageable pageable,SearchForm form,Integer userId);
 	
-	@Select("select count(*) from cheat where title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%'")
-	int searchCount(SearchForm form);
+	int searchCount(SearchForm form,Integer userId);
 	
-	@Select("select * from cheat where id=#{id}")
-	Cheat selectById(Integer id);
+	@Select("select * from cheat where id=#{id} and user_id=#{userId}")
+	Cheat select(Integer id, Integer userId);
 }

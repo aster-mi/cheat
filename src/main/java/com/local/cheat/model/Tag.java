@@ -11,4 +11,7 @@ public class Tag {
 	private String name;
 	private String color;
 	
+	// TODO 出力用の文字色
+	private String fontColor;
+	
 }

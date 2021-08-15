@@ -13,6 +13,7 @@ import com.local.cheat.constants.URL;
 import com.local.cheat.form.CheatForm;
 import com.local.cheat.mapper.CheatMapper;
 import com.local.cheat.service.CheatService;
+import com.local.cheat.service.TagService;
 import com.local.cheat.util.CheatMAV;
 
 @RequestMapping("edit")
@@ -20,15 +21,16 @@ import com.local.cheat.util.CheatMAV;
 public class EditCheatController {
 
 	@Autowired
-	private CheatMapper mapper;
-
-	@Autowired
 	private CheatService service;
+	
+	@Autowired
+	private TagService tagService;
 	
 	@PostMapping
 	public CheatMAV delete(CheatMAV mav, @RequestParam("id") Integer id) {
-		var model = mapper.selectById(id);
+		var model = service.select(id);
 		mav.addObject("form", service.modelToForm(model));
+		mav.addObject("tags",tagService.selectAll());
 		mav.setViewName(URL.TEMPLATE_EDIT_CHEAT);
 		return mav;
 	}
@@ -37,10 +39,11 @@ public class EditCheatController {
 	public CheatMAV submit(CheatMAV mav, @ModelAttribute @Validated CheatForm form, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			mav.addObject("form",form);
+			mav.addObject("tags",tagService.selectAll());
 			mav.addObject("errors",bindingResult.getFieldErrors());
 			mav.setViewName(URL.TEMPLATE_EDIT_CHEAT);
 		} else {
-			mapper.update(service.formToModel(form));
+			service.update(service.formToModel(form));
 			mav.setViewName(URL.REDIRECT_HOME);
 		}
 		return mav;

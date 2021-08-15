@@ -11,6 +11,8 @@ public class CheatForm {
 	
 	private Integer id;
 	
+	private Integer tagId;
+	
 	@NotEmpty(message = "タイトルを入力してください。")
 	@Size(max=50,message="タイトルは50文字以内に設定してください。")
 	private String title;

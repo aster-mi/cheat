@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 import com.local.cheat.form.TagForm;
 import com.local.cheat.mapper.TagMapper;
 import com.local.cheat.model.Tag;
+import com.local.cheat.session.UserSession;
 
 @Service
 public class TagService {
 	
 	@Autowired
 	private TagMapper mapper;
+	
+	@Autowired
+    protected UserSession session;
 	
 	private ModelMapper modelMapper = new ModelMapper();
 	
@@ -27,10 +31,15 @@ public class TagService {
 	}
 	
 	public List<Tag> selectAll(){
-		return mapper.selectByUserId(null);// TODO　userId指定
+		return mapper.selectByUserId(session.getUser().getUserId());
 	}
 	
-	public int delete(Integer id) {
-		return mapper.delete(id);
+	public void insert(Tag tag) {
+		tag.setUserId(session.getUser().getUserId());
+		mapper.insert(tag);
+	}
+	
+	public int delete(Integer id) {		
+		return mapper.delete(id,session.getUser().getUserId());
 	}
 }

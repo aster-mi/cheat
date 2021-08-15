@@ -6,6 +6,9 @@
 	<!-- nav -->
 	<div th:replace="common/nav :: nav_fragment"></div>
 	<div class="container-md">
+		<a class="btn btn-outline-success rounded-pill mt-3" th:href="@{add}">
+			<i class="fas fa-plus"></i><span class="p-3 fw-bold">タグ追加</span>
+		</a>
 		<div th:each="tag : ${tags}" th:object="${tag}">
 			<div th:text="*{name}" class="badge rounded-pill" 
 				th:style="'background-color: ' + *{color}"></div>

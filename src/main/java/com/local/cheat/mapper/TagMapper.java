@@ -13,20 +13,19 @@ import com.local.cheat.model.Tag;
 @Mapper
 public interface TagMapper {
 
-	@Insert("insert into tag(name, color) values(#{name}, #{color})")
-	void insert(Tag model);
+	@Insert("insert into tag(user_id, name, color) values(#{userId}, #{name}, #{color})")
+	void insert(Tag tag);
 	
-	@Update("update tag set name=#{name}, color=#{color} where id=#{id}")
-	void update(Tag model);
+	@Update("update tag set user_id=#{userId} name=#{name}, color=#{color} where id=#{id}")
+	void update(Tag tag);
 	
 	// TODO CheatレコードのcolorIdを外す必要がある。
-	@Delete("delete from tag where id=#{id}")
-	int delete(Integer id);
+	@Delete("delete from tag where user_id=#{userId} id=#{id}")
+	int delete(Integer id, Integer userId);
 	
-	// TODO 引数の型は検索時決める
 	@Select("select * from tag where user_id=#{userId}")
-	List<Tag> selectByUserId(String userId);
+	List<Tag> selectByUserId(Integer userId);
 	
-	@Select("select * from tag where id=#{id}")
-	Tag selectById(Integer id);
+	@Select("select * from tag where id=#{id} and user_id=#{userId}")
+	Tag selectById(Integer id, Integer userId);
 }

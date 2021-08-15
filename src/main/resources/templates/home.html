@@ -9,33 +9,35 @@
 	<div class="container-xl d-flex flex-row">
 		
 			<!-- サイドバー -->
-			<aside class="d-none d-md-block d-flex flex-column col-2 border-end sticky-top align-self-start">
-				
+			<aside class="d-none d-md-block col-2 border-end sticky-top">
+				<div class="d-flex flex-column h-100">
 				<!-- 追加ボタン -->
-				<a class="btn btn-outline-success rounded-pill m-3" th:href="@{/add}">
+				<a class="btn btn-outline-success rounded-pill mt-3" th:href="@{/add}">
 					<i class="fas fa-plus"></i> <span class="p-3 fw-bold">新規作成</span>
 				</a>
 				
 				<!-- タグ一覧 -->
-				<th:block th:each="tag : ${tags}">
-					<ul class="list-unstyled">
-						<li>
-							<a class="text-secondary" href="#"> <i
-								class="fas fa-tags"></i><span class="fs-4" th:text="${tag}"></span>
-							</a>
-						</li>
-					</ul>
-				</th:block>
+				<a class="btn btn-outline-secondary rounded-pill mt-3" th:href="@{tag/list}">
+					<i class="fas fa-tags"></i><span class="p-3 fw-bold">タグ一覧</span>
+				</a>
+				<ul class="list-unstyled">
+					<th:block th:each="tag : ${tags}" th:object="${tag}">
+						<li><a class="text-decoration-none" th:href="@{search(tagId=*{id})}"> <i
+								class="fas fa-tag fa-xs" th:style="'color: ' + *{color}"></i> <span
+								class="text-secondary fs-5" th:text="*{name}"></span>
+						</a></li>
+					</th:block>
+				</ul>
 				
 				<!-- ユーザー情報 -->
-				<div class="d-flex position-relative align-items-center mt-auto p-1 user-info">
+				<div class="d-flex position-relative align-items-center user-info mt-auto">
 					<!-- アイコン -->
 					<div>
 						<i class="fas fa-user-circle fa-2x"></i>
 					</div>
 					<!-- 名前・ID -->
 					<div>
-						<div class="ps-1 fw-bold"
+						<div class="ps-1 fw-bold pt-3"
 							th:text="${#httpServletRequest.remoteUser}"></div>
 						<div class="text-secondary">@12345678</div>
 					</div>
@@ -65,7 +67,7 @@
 						</ul>
 					</div>
 				</div>
-				
+				</div>
 			</aside>
 			
 			<!-- 一覧 -->
@@ -87,8 +89,12 @@
 						<div class="text-secondary">データが存在しないようです</div>
 						<div class="text-secondary">上のボタンからコードを追加してみよう！</div>
 					</div>
-					<div class="text-secondary" th:if="${@URL.SEARCH_CHEAT.equals(currentUrl)}" 
+					<div th:if="${@URL.SEARCH_CHEAT.equals(currentUrl)}"></div>
+					<div th:unless="${#httpServletRequest.getParameter('q')==null}" class="text-secondary"
 						th:text="${#httpServletRequest.getParameter('q')+' に一致する結果は見つかりませんでした'}">
+					</div>
+					<div th:unless="${#httpServletRequest.getParameter('tagId')==null}" class="text-secondary"
+						th:text="'タグ : <'+${@tagUtil.getTag(tags, #httpServletRequest.getParameter('tagId')).getName()+'> に一致する結果は見つかりませんでした'}">
 					</div>
 				</div>
 				<!-- データがある場合 -->
@@ -134,7 +140,11 @@
 						</div>
 						<div class="col-11 mx-auto">
 							<div class="mb-1">
-								<div class="badge rounded-pill bg-secondary">Java</div>
+								<!-- タグ -->
+								<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
+									<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
+									th:style="'background-color: ' + ${tag.color}"></div>
+								</th:block>
 								<span th:text="*{title}" class="fs-5 fw-bold"></span>
 							</div>
 							<pre class="text-break m-0 detail" th:utext="*{escapeDetail}"></pre>

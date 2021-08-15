@@ -13,6 +13,8 @@ public class Cheat {
 	private final Integer CODE_MAX_LINE = 10;
 
 	private Integer id;
+	private Integer userId;
+	private Integer tagId;
 	private String title;
 	private String code;
 	private String detail;

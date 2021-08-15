@@ -13,6 +13,16 @@
 				<input class="form-control form-control-lg"
 					type="text" th:field="*{title}" maxlength='50' placeholder="例）var使用方法"></input>
 			</div>
+			<div class="mb-3 col-3">
+				<label class="form-label fw-bold">タグ</label> <select
+					th:field="*{tagId}" class="form-select"
+					aria-label="Default select example">
+					<option value="0" selected>未選択</option>
+					<th:block th:each="tag : ${tags}">
+						<option th:value="${tag.id}" th:text="${tag.name}"></option>
+					</th:block>
+				</select>
+			</div>
 			<div class="mb-3">
 				<label class="form-label fw-bold">コード</label>
 				<textarea class="form-control" rows="15" th:field="*{code}" placeholder="例）var myClass = new MyClass();"></textarea>

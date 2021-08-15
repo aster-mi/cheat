@@ -1,13 +1,12 @@
 package com.local.cheat.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +17,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.local.cheat.constants.URL;
 import com.local.cheat.form.SearchForm;
-import com.local.cheat.model.Cheat;
+import com.local.cheat.model.User;
 import com.local.cheat.service.CheatService;
+import com.local.cheat.service.TagService;
+import com.local.cheat.session.UserSession;
 import com.local.cheat.util.CheatMAV;
 
 @Controller
@@ -29,10 +30,18 @@ public class HomeController {
 
 	@Autowired
 	private CheatService service;
+	
+	@Autowired
+	private TagService tagService;
+	
+	@Autowired
+    protected UserSession session;
 
 	@GetMapping
-	public CheatMAV home(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable) {
+	public CheatMAV home(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable,@AuthenticationPrincipal User user) {
+		session.setUser(user);
 		mav.addObject("cheats", service.selectAll(pageable));
+		mav.addObject("tags", tagService.selectAll());
 		mav.addObject("currentUrl", URL.HOME);
 		mav.setViewName(URL.TEMPLATE_HOME);
 		return mav;
@@ -40,11 +49,12 @@ public class HomeController {
 
 	@GetMapping("search")
 	public CheatMAV search(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable, @Valid SearchForm form, BindingResult result) {
-		if(result.hasErrors()){
+		if(StringUtils.isEmpty(form.getQ()+form.getTagId())){
 			mav.setViewName(URL.REDIRECT_HOME);
 			return mav;
         }
 		mav.addObject("cheats", service.search(pageable ,form));
+		mav.addObject("tags", tagService.selectAll());
 		mav.addObject("currentUrl", URL.SEARCH_CHEAT);
 		mav.setViewName(URL.TEMPLATE_HOME);
 		return mav;

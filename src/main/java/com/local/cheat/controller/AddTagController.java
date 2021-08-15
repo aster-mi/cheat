@@ -11,17 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.local.cheat.constants.URL;
 import com.local.cheat.form.TagForm;
-import com.local.cheat.mapper.TagMapper;
 import com.local.cheat.service.TagService;
 import com.local.cheat.util.CheatMAV;
 
 @RequestMapping(URL.ADD_TAG)
 @Controller
 public class AddTagController {
-
-	@Autowired
-	private TagMapper mapper;
-
+	
 	@Autowired
 	private TagService service;
 
@@ -40,7 +36,7 @@ public class AddTagController {
 			mav.addObject("errors", bindingResult.getFieldErrors());
 			mav.setViewName(URL.TEMPLATE_ADD_TAG);
 		} else {
-			mapper.insert(service.formToModel(form));
+			service.insert(service.formToModel(form));
 			mav.setViewName(URL.REDIRECT_HOME);
 		}
 		return mav;
