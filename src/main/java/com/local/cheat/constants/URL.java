@@ -6,17 +6,26 @@ import org.springframework.stereotype.Component;
 public class URL {
 	
 	public static final String TEMPLATE_HOME = "home";
-	public static final String TEMPLATE_ADD = "add";
-	public static final String TEMPLATE_EDIT = "edit";
+	public static final String TEMPLATE_ADD_CHEAT = "add";
+	public static final String TEMPLATE_EDIT_CHEAT = "edit";
+	public static final String TEMPLATE_ADD_TAG = "tag/add";
+	public static final String TEMPLATE_EDIT_TAG = "tag/edit";
+	public static final String TEMPLATE_LIST_TAG = "tag/list";
 
 	// redirect
 	public static final String REDIRECT_HOME = "redirect:/";
-	public static final String REDIRECT_ADD = "redirect:/add";
-	public static final String REDIRECT_EDIT = "redirect:/edit";
+	public static final String REDIRECT_ADD_CHEAT = "redirect:/add";
+	public static final String REDIRECT_EDIT_CHEAT = "redirect:/edit";
+	public static final String REDIRECT_ADD_TAG = "redirect:/tag/add";
+	public static final String REDIRECT_EDIT_TAG = "redirect:/tag/edit";
+	public static final String REDIRECT_LIST_TAG = "redirect:/tag/list";
 	
 	// url
 	public static final String HOME = "/";
-	public static final String SEARCH = HOME+"search";
+	public static final String SEARCH_CHEAT = HOME+"search";
+	public static final String ADD_TAG = "tag/add";
+	public static final String EDIT_TAG = "tag/edit";
+	public static final String LIST_TAG = "tag/list";
 	
 	public static final String LINK_REGEX = "(http://|https://){1}[\\w\\.\\-/:]+";
 	

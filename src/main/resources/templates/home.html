@@ -87,7 +87,7 @@
 						<div class="text-secondary">データが存在しないようです</div>
 						<div class="text-secondary">上のボタンからコードを追加してみよう！</div>
 					</div>
-					<div class="text-secondary" th:if="${@URL.SEARCH.equals(currentUrl)}" 
+					<div class="text-secondary" th:if="${@URL.SEARCH_CHEAT.equals(currentUrl)}" 
 						th:text="${#httpServletRequest.getParameter('q')+' に一致する結果は見つかりませんでした'}">
 					</div>
 				</div>
@@ -133,11 +133,13 @@
 							</form>
 						</div>
 						<div class="col-11 mx-auto">
-							<span th:text="*{title}" class="fs-5 fw-bold"></span>
+							<div class="mb-1">
+								<div class="badge rounded-pill bg-secondary">Java</div>
+								<span th:text="*{title}" class="fs-5 fw-bold"></span>
+							</div>
 							<pre class="text-break m-0 detail" th:utext="*{escapeDetail}"></pre>
 							<div>
-								<div class="badge rounded-pill bg-secondary">Java</div>
-								<div class="container-fluid p-0 m-0 position-relative">
+								<div th:unless="*{code == null || ''.equals(code)}" class="container-fluid p-0 m-0 position-relative">
 									<pre
 										class="m-0 p-1 code prettyprint linenums rounded text-break"
 										th:text="*{shortCode}"></pre>

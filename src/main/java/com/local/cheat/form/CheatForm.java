@@ -15,7 +15,6 @@ public class CheatForm {
 	@Size(max=50,message="タイトルは50文字以内に設定してください。")
 	private String title;
 	
-	@NotEmpty(message = "コードを入力してください。")
 	@Size(max=10000)
 	private String code;
 	

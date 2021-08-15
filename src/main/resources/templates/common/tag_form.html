@@ -1,0 +1,29 @@
+<th:block xmlns:th="http://www.thymeleaf.org"
+	th:fragment="tag_form_fragment(buttons)">
+	<div class="container bg-light border rounded m-4 p-3">
+		<form class="d-flex flex-row justify-content-around"  method="post" th:object="${form}">
+			<div th:if="${errors!=null&&!errors.isEmpty()}"
+				th:each="error : ${errors}">
+				<div class="alert alert-danger m-1 p-2"
+					th:text="${error.getDefaultMessage()}"></div>
+				</div>
+				<input type="text" th:field="*{id}" class="d-none"></input>
+				<!-- タグ名 -->
+				<div class="col-8 d-flex align-items-center">
+					<input class="form-control form-control-lg"
+						type="text" th:field="*{name}" maxlength='10' placeholder="java"></input>
+				</div>
+				<!-- 色選択 -->
+				<div class="col-1 d-flex align-items-center">
+						<input th:field="*{color}" type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+					</div>
+				<div class="col-1 d-flex align-items-center">
+						
+						<!-- ボタン -->
+						<th:block th:replace="${buttons}" />
+						
+				</div>
+		</form>
+	</div>
+</th:block>
+

@@ -29,7 +29,7 @@ public class EditCheatController {
 	public CheatMAV delete(CheatMAV mav, @RequestParam("id") Integer id) {
 		var model = mapper.selectById(id);
 		mav.addObject("form", service.modelToForm(model));
-		mav.setViewName(URL.TEMPLATE_EDIT);
+		mav.setViewName(URL.TEMPLATE_EDIT_CHEAT);
 		return mav;
 	}
 
@@ -38,7 +38,7 @@ public class EditCheatController {
 		if (bindingResult.hasErrors()) {
 			mav.addObject("form",form);
 			mav.addObject("errors",bindingResult.getFieldErrors());
-			mav.setViewName(URL.TEMPLATE_EDIT);
+			mav.setViewName(URL.TEMPLATE_EDIT_CHEAT);
 		} else {
 			mapper.update(service.formToModel(form));
 			mav.setViewName(URL.REDIRECT_HOME);

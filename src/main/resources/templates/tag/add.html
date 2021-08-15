@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head :: head_fragment(title = 'タグ作成')">
+</head>
+<body>
+	<!-- nav -->
+	<div th:replace="common/nav :: nav_fragment"></div>
+	<div class="container-md">
+		<div
+			th:replace="common/tag_form :: tag_form_fragment(buttons = ~{::button})">
+			<button formaction="/tag/add/submit" type="submit"
+				class="btn btn-success">追加</button>
+		</div>
+	</div>
+</body>
+</html>

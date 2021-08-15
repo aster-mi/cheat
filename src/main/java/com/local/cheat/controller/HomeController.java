@@ -45,7 +45,7 @@ public class HomeController {
 			return mav;
         }
 		mav.addObject("cheats", service.search(pageable ,form));
-		mav.addObject("currentUrl", URL.SEARCH);
+		mav.addObject("currentUrl", URL.SEARCH_CHEAT);
 		mav.setViewName(URL.TEMPLATE_HOME);
 		return mav;
 	}
