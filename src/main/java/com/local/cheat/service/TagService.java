@@ -34,12 +34,21 @@ public class TagService {
 		return mapper.selectByUserId(session.getUser().getUserId());
 	}
 	
+	public Tag select(Integer id) {
+		return mapper.selectById(id, session.getUser().getUserId());
+	}
+	
 	public void insert(Tag tag) {
 		tag.setUserId(session.getUser().getUserId());
 		mapper.insert(tag);
 	}
 	
-	public int delete(Integer id) {		
+	public int delete(Integer id) {
 		return mapper.delete(id,session.getUser().getUserId());
+	}
+	
+	public void update(Tag tag) {
+		tag.setUserId(session.getUser().getUserId());
+		mapper.update(tag);
 	}
 }

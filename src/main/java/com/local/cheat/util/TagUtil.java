@@ -1,6 +1,7 @@
 package com.local.cheat.util;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -16,11 +17,11 @@ public class TagUtil {
 	 * @param tag_id
 	 * @return
 	 */
-	public static Tag getTag(List<Tag> tags,Integer tag_id){
-		if(CollectionUtils.isEmpty(tags)) {
+	public static Tag getTag(List<Tag> tags,Integer tagId){
+		if(CollectionUtils.isEmpty(tags) || Objects.isNull(tagId)) {
 			return null;
 		}
-		return tags.stream().filter(tag->tag.getId().equals(tag_id)).findFirst().get();
+		return tags.stream().filter(tag->tag.getId().equals(tagId)).findFirst().orElse(null);
 	}
 	
 	

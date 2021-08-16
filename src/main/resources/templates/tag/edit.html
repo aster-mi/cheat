@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head :: head_fragment(title = '編集')">
+</head>
+<body>
+	<!-- nav -->
+	<div th:replace="common/nav :: nav_fragment"></div>
+	<div class="container-md">
+		<div
+			th:replace="common/tag_form :: tag_form_fragment(buttons = ~{::button})">
+			<button formaction="edit/submit" class="btn btn-success">完了</button>
+			<button formaction="edit/delete" class="btn btn-danger ml-auto">削除</button>
+		</div>
+	</div>
+</body>
+</html>

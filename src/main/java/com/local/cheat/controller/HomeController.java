@@ -38,8 +38,11 @@ public class HomeController {
     protected UserSession session;
 
 	@GetMapping
-	public CheatMAV home(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable,@AuthenticationPrincipal User user) {
+	public CheatMAV home(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable, @Valid SearchForm form, @AuthenticationPrincipal User user) {
 		session.setUser(user);
+		form.setQ(null);
+		form.setTagId(null);
+		mav.addObject("form", form);
 		mav.addObject("cheats", service.selectAll(pageable));
 		mav.addObject("tags", tagService.selectAll());
 		mav.addObject("currentUrl", URL.HOME);

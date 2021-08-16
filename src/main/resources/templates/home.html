@@ -10,7 +10,7 @@
 		
 			<!-- サイドバー -->
 			<aside class="d-none d-md-block col-2 border-end sticky-top">
-				<div class="d-flex flex-column h-100">
+				<div class="d-flex flex-column h-100 m-2">
 				<!-- 追加ボタン -->
 				<a class="btn btn-outline-success rounded-pill mt-3" th:href="@{/add}">
 					<i class="fas fa-plus"></i> <span class="p-3 fw-bold">新規作成</span>
@@ -22,7 +22,7 @@
 				</a>
 				<ul class="list-unstyled">
 					<th:block th:each="tag : ${tags}" th:object="${tag}">
-						<li><a class="text-decoration-none" th:href="@{search(tagId=*{id})}"> <i
+						<li><a class="text-decoration-none" th:href="@{search(tagId=*{id},q=${form.q})}"> <i
 								class="fas fa-tag fa-xs" th:style="'color: ' + *{color}"></i> <span
 								class="text-secondary fs-5" th:text="*{name}"></span>
 						</a></li>
@@ -71,7 +71,29 @@
 			</aside>
 			
 			<!-- 一覧 -->
-			<main class="d-flex flex-column col-md-10 col-12">
+			<main class="d-flex flex-column col-md-10 col-12" 
+				th:with="searchTag=${@tagUtil.getTag(tags, form.tagId)}, q=${form.q}">
+				<div th:if="${searchTag!=null||q!=null}" class="d-flex flex-row border bg-light rounded m-2 p-1">
+					<span><i class="fas fa-search text-dark m-auto"></i></span>
+					<div th:if="${searchTag!=null}">
+						<a th:href="@{search(tagId=null, q=${q})}">
+							<span class="ms-1 badge rounded-pill" 
+											th:style="'background-color: ' + ${searchTag.color}">
+											<span th:text="${searchTag.name}"></span>
+											<i class="fas fa-times text-surround-bordar ms-2"></i>
+							</span>
+						</a>
+					</div>
+					<div th:if="${q!=null}">
+						<a th:href="@{search(q=null, tagId=${form.tagId})}">
+							<span class="ms-1 badge border border-dark text-dark rounded">
+											<span th:text="${q}"></span>
+											<i class="fas fa-times text-surround-bordar ms-2"></i>
+							</span>
+						</a>
+					</div>
+				</div>
+				
 				<!-- データが無い場合 -->
 				<div class="text-center" th:unless="${cheats != null and cheats.getContent().size() > 0}">
 					<div class="m-5 text-secondary faa-float animated">
@@ -90,11 +112,8 @@
 						<div class="text-secondary">上のボタンからコードを追加してみよう！</div>
 					</div>
 					<div th:if="${@URL.SEARCH_CHEAT.equals(currentUrl)}"></div>
-					<div th:unless="${#httpServletRequest.getParameter('q')==null}" class="text-secondary"
-						th:text="${#httpServletRequest.getParameter('q')+' に一致する結果は見つかりませんでした'}">
-					</div>
-					<div th:unless="${#httpServletRequest.getParameter('tagId')==null}" class="text-secondary"
-						th:text="'タグ : <'+${@tagUtil.getTag(tags, #httpServletRequest.getParameter('tagId')).getName()+'> に一致する結果は見つかりませんでした'}">
+					<div class="text-secondary"
+						th:text="検索条件に一致する結果は見つかりませんでした">
 					</div>
 				</div>
 				<!-- データがある場合 -->
@@ -141,9 +160,11 @@
 						<div class="col-11 mx-auto">
 							<div class="mb-1">
 								<!-- タグ -->
-								<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
-									<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
-									th:style="'background-color: ' + ${tag.color}"></div>
+								<th:block th:unless="${cheat.tagId == null}">
+									<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
+										<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
+										th:style="'background-color: ' + ${tag.color}"></div>
+									</th:block>
 								</th:block>
 								<span th:text="*{title}" class="fs-5 fw-bold"></span>
 							</div>

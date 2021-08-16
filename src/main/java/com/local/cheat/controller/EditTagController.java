@@ -10,18 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.local.cheat.constants.URL;
-import com.local.cheat.form.CheatForm;
-import com.local.cheat.mapper.CheatMapper;
-import com.local.cheat.service.CheatService;
+import com.local.cheat.form.TagForm;
 import com.local.cheat.service.TagService;
 import com.local.cheat.util.CheatMAV;
 
-@RequestMapping("edit")
+@RequestMapping(URL.EDIT_TAG)
 @Controller
-public class EditCheatController {
+public class EditTagController {
 
 	@Autowired
-	private CheatService service;
+	private TagService service;
 	
 	@Autowired
 	private TagService tagService;
@@ -31,17 +29,17 @@ public class EditCheatController {
 		var model = service.select(id);
 		mav.addObject("form", service.modelToForm(model));
 		mav.addObject("tags",tagService.selectAll());
-		mav.setViewName(URL.TEMPLATE_EDIT_CHEAT);
+		mav.setViewName(URL.TEMPLATE_EDIT_TAG);
 		return mav;
 	}
 
 	@PostMapping("submit")
-	public CheatMAV submit(CheatMAV mav, @ModelAttribute @Validated CheatForm form, BindingResult bindingResult) {
+	public CheatMAV submit(CheatMAV mav, @ModelAttribute @Validated TagForm form, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			mav.addObject("form",form);
 			mav.addObject("tags",tagService.selectAll());
 			mav.addObject("errors",bindingResult.getFieldErrors());
-			mav.setViewName(URL.TEMPLATE_EDIT_CHEAT);
+			mav.setViewName(URL.TEMPLATE_EDIT_TAG);
 		} else {
 			service.update(service.formToModel(form));
 			mav.setViewName(URL.REDIRECT_HOME);
@@ -50,7 +48,7 @@ public class EditCheatController {
 	}
 
 	@PostMapping("delete")
-	public CheatMAV delete(CheatMAV mav, @ModelAttribute CheatForm form) {
+	public CheatMAV delete(CheatMAV mav, @ModelAttribute TagForm form) {
 		service.delete(form.getId());
 		mav.setViewName(URL.REDIRECT_HOME);
 		return mav;

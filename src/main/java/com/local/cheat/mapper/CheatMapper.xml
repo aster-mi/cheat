@@ -6,7 +6,9 @@
 <select id="search" resultType="Cheat">
 select * from cheat 
 where user_id=#{userId} 
+<if test="form.q != null">
 and (title like '%'||#{form.q}||'%' or code like '%'||#{form.q}||'%' or detail like '%'||#{form.q}||'%') 
+</if>
 <if test="form.tagId != null">
 and (tag_id=#{form.tagId}) 
 </if>
@@ -17,7 +19,9 @@ offset #{pageable.offset}
 <select id="searchCount" resultType="int">
 select count(*) from cheat 
 where user_id=#{userId} 
+<if test="form.q != null">
 and (title like '%'||#{form.q}||'%' or code like '%'||#{form.q}||'%' or detail like '%'||#{form.q}||'%') 
+</if>
 <if test="form.tagId != null">
 and (tag_id=#{form.tagId})
 </if>
