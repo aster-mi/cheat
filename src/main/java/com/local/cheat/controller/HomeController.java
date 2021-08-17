@@ -1,5 +1,7 @@
 package com.local.cheat.controller;
 
+import java.util.Objects;
+
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,9 +53,8 @@ public class HomeController {
 
 	@GetMapping("search")
 	public CheatMAV search(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable, @Valid SearchForm form, BindingResult result) {
-		if(StringUtils.isEmpty(form.getQ()+form.getTagId())){
+		if(Objects.isNull(form.getQ())&&Objects.isNull(form.getTagId())){
 			mav.setViewName(URL.REDIRECT_HOME);
-			System.out.println("xxxxxxxxxxxxxxxx");
 			return mav;
         }
 		mav.addObject("cheats", service.search(pageable ,form));

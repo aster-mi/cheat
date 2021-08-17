@@ -6,17 +6,21 @@ import lombok.Data;
 
 @Data
 public class SearchForm {
-	
+
 	private String q;
-	
+
 	private Integer tagId;
-	
+
 	public String getQ() {
-		return StringUtils.isEmpty(q)?null:q;
+		return StringUtils.isEmpty(q) ? null : q;
 	}
-	
+
+	public Integer getTagId() {
+		return tagId == null || tagId.equals(0) ? null : tagId;
+	}
+
 	public void reset() {
-		q=null;
-		tagId=null;
+		q = null;
+		tagId = null;
 	}
 }
