@@ -11,7 +11,7 @@
 			<div class="mb-3 col-8">
 				<label class="form-label fw-bold">タイトル</label><span class="ms-2 badge bg-danger">必須</span>
 				<input class="form-control form-control-lg"
-					type="text" th:field="*{title}" maxlength='50' placeholder="例）var使用方法"></input>
+					type="text" th:field="*{title}" maxlength='50' placeholder="例）var使用方法" spellcheck="false"></input>
 			</div>
 			<div class="mb-3 col-3">
 				<label class="form-label fw-bold">タグ</label> <select
@@ -25,11 +25,11 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label fw-bold">コード</label>
-				<textarea class="form-control" rows="15" th:field="*{code}" placeholder="例）var myClass = new MyClass();"></textarea>
+				<textarea class="form-control" rows="15" th:field="*{code}" placeholder="例）var myClass = new MyClass();" spellcheck="false"></textarea>
 			</div>
 			<div class="mb-3">
 				<label class="form-label fw-bold text-">詳細</label>
-				<textarea class="form-control" rows="6" th:field="*{detail}" placeholder="例）varを型として定義することで右辺から自動で型を判定できる。"></textarea>
+				<textarea class="form-control" rows="6" th:field="*{detail}" placeholder="例）varを型として定義することで右辺から自動で型を判定できる。" spellcheck="false"></textarea>
 			</div>
 			<div class="btn-toolbar justify-content-between">
 				<!-- ボタン -->

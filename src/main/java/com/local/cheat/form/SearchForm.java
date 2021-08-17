@@ -14,4 +14,9 @@ public class SearchForm {
 	public String getQ() {
 		return StringUtils.isEmpty(q)?null:q;
 	}
+	
+	public void reset() {
+		q=null;
+		tagId=null;
+	}
 }

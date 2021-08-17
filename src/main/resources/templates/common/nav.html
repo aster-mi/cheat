@@ -1,17 +1,17 @@
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="nav_fragment">
 	<nav class="navbar navbar-light bg-success sticky-top box-shadow-under navbar-expand-md">
 		<div class="container-xl">
-			<div>
-				<a class="btn p-0 fw-bold text-light fs-3" th:href="@{/}"><i class="fas fa-ghost me-1"></i>CodeCheat</a>
+			<div class="ms-4">
+				<a class="btn p-0 fw-bold text-light fs-3" th:href="@{/}"><i class="fas fa-ghost me-1"></i>Relearn</a>
 			</div>
 			<!-- 検索ボタン -->
-			<form class="d-flex d-none d-md-block">
+			<form class="d-flex d-none d-md-block" target="get" action="search">
 				<div class="input-group">
 					<input name="q" class="form-control" type="text"
-						placeholder="Search code..." aria-describedby="search-button"
-						th:value="${#httpServletRequest.getParameter('q')}">
-					<button formtarget="get" th:formaction="@{/search}"
-						class="btn btn-outline-light" type="submit" id="search-button">
+						placeholder="Search code..."
+						th:value="${searchForm!=null?searchForm.q:''}">
+					<button
+						class="btn btn-outline-light" type="submit">
 						<i class="fas fa-search"></i>
 					</button>
 				</div>
@@ -32,10 +32,10 @@
 				<form>
 					<div class="input-group p-3">
 						<input name="q" class="form-control" type="text"
-							placeholder="Search code..." aria-describedby="search-button"
-							th:value="${#httpServletRequest.getParameter('q')}">
-						<button formtarget="get" th:formaction="@{/search}"
-							class="btn btn-success" type="submit" id="search-button">
+							placeholder="Search code..."
+							th:value="${searchForm!=null?searchForm.q:''}">
+						<button
+							class="btn btn-outline-success" type="submit">
 							<i class="fas fa-search"></i>
 						</button>
 					</div>

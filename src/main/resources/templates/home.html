@@ -22,7 +22,7 @@
 				</a>
 				<ul class="list-unstyled">
 					<th:block th:each="tag : ${tags}" th:object="${tag}">
-						<li><a class="text-decoration-none" th:href="@{search(tagId=*{id},q=${form.q})}"> <i
+						<li><a class="text-decoration-none" th:href="@{search(tagId=*{id},q=${searchForm.q})}"> <i
 								class="fas fa-tag fa-xs" th:style="'color: ' + *{color}"></i> <span
 								class="text-secondary fs-5" th:text="*{name}"></span>
 						</a></li>
@@ -72,7 +72,7 @@
 			
 			<!-- 一覧 -->
 			<main class="d-flex flex-column col-md-10 col-12" 
-				th:with="searchTag=${@tagUtil.getTag(tags, form.tagId)}, q=${form.q}">
+				th:with="searchTag=${@tagUtil.getTag(tags, searchForm.tagId)}, q=${searchForm.q}">
 				<div th:if="${searchTag!=null||q!=null}" class="d-flex flex-row border bg-light rounded m-2 p-1">
 					<span><i class="fas fa-search text-dark m-auto"></i></span>
 					<div th:if="${searchTag!=null}">
@@ -85,7 +85,7 @@
 						</a>
 					</div>
 					<div th:if="${q!=null}">
-						<a th:href="@{search(q=null, tagId=${form.tagId})}">
+						<a th:href="@{search(q=null, tagId=${searchForm.tagId})}">
 							<span class="ms-1 badge border border-dark text-dark rounded">
 											<span th:text="${q}"></span>
 											<i class="fas fa-times text-surround-bordar ms-2"></i>

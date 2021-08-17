@@ -40,9 +40,8 @@ public class HomeController {
 	@GetMapping
 	public CheatMAV home(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable, @Valid SearchForm form, @AuthenticationPrincipal User user) {
 		session.setUser(user);
-		form.setQ(null);
-		form.setTagId(null);
-		mav.addObject("form", form);
+		form.reset();
+		mav.addObject("searchForm", form);
 		mav.addObject("cheats", service.selectAll(pageable));
 		mav.addObject("tags", tagService.selectAll());
 		mav.addObject("currentUrl", URL.HOME);
@@ -54,6 +53,7 @@ public class HomeController {
 	public CheatMAV search(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable, @Valid SearchForm form, BindingResult result) {
 		if(StringUtils.isEmpty(form.getQ()+form.getTagId())){
 			mav.setViewName(URL.REDIRECT_HOME);
+			System.out.println("xxxxxxxxxxxxxxxx");
 			return mav;
         }
 		mav.addObject("cheats", service.search(pageable ,form));
