@@ -37,7 +37,7 @@ public class AddTagController {
 			mav.setViewName(URL.TEMPLATE_ADD_TAG);
 		} else {
 			service.insert(service.formToModel(form));
-			mav.setViewName(URL.REDIRECT_HOME);
+			mav.setViewName(URL.REDIRECT_LIST_TAG);
 		}
 		return mav;
 	}

@@ -7,7 +7,12 @@
 select * from cheat 
 where user_id=#{userId} 
 <if test="form.q != null">
-and (title like '%'||#{form.q}||'%' or code like '%'||#{form.q}||'%' or detail like '%'||#{form.q}||'%') 
+<foreach item="q" collection="form.searchWords">
+and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%') 
+</foreach>
+<foreach item="q" collection="form.notSearchWords">
+and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%') 
+</foreach>
 </if>
 <if test="form.tagId != null">
 and (tag_id=#{form.tagId}) 
@@ -20,7 +25,12 @@ offset #{pageable.offset}
 select count(*) from cheat 
 where user_id=#{userId} 
 <if test="form.q != null">
-and (title like '%'||#{form.q}||'%' or code like '%'||#{form.q}||'%' or detail like '%'||#{form.q}||'%') 
+<foreach item="q" collection="form.searchWords">
+and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%') 
+</foreach>
+<foreach item="q" collection="form.notSearchWords">
+and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%') 
+</foreach>
 </if>
 <if test="form.tagId != null">
 and (tag_id=#{form.tagId})

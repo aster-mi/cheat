@@ -9,7 +9,9 @@ aside {
 	background-color: rgba(100, 100, 100, 0.1) !important;
 	border-radius: 50rem !important;
 }
-
+.text-small {
+	font-size: 0.8rem;
+}
 .hover-action {
 	border-radius: 50rem !important;
 }

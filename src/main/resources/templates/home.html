@@ -73,25 +73,42 @@
 			<!-- 一覧 -->
 			<main class="d-flex flex-column col-md-10 col-12" 
 				th:with="searchTag=${@tagUtil.getTag(tags, searchForm.tagId)}, q=${searchForm.q}">
-				<div th:if="${searchTag!=null||q!=null}" class="d-flex flex-row border bg-light rounded m-2 p-1">
+				<div th:if="${searchTag!=null||q!=null}" class="d-flex flex-column border bg-light rounded m-2 p-1">
 					<span><i class="fas fa-search text-dark m-auto"></i></span>
 					<div th:if="${searchTag!=null}">
-						<a th:href="@{search(tagId=null, q=${q})}">
+						<span class="text-small font-monospace">タグ：</span>
+						<a th:href="@{search(tagId=null, q=${q})}" class="text-decoration-none">
 							<span class="ms-1 badge rounded-pill" 
 											th:style="'background-color: ' + ${searchTag.color}">
 											<span th:text="${searchTag.name}"></span>
-											<i class="fas fa-times text-surround-bordar ms-2"></i>
+											<i class="fas fa-times ms-2"></i>
 							</span>
 						</a>
 					</div>
-					<div th:if="${q!=null}">
-						<a th:href="@{search(q=null, tagId=${searchForm.tagId})}">
-							<span class="ms-1 badge border border-dark text-dark rounded">
-											<span th:text="${q}"></span>
-											<i class="fas fa-times text-surround-bordar ms-2"></i>
-							</span>
-						</a>
-					</div>
+					<th:block th:if="${q!=null}">
+						<div>
+							<span class="text-small font-monospace">含む：</span>
+							<th:block th:each="word : ${searchForm.searchWords}">
+								<a th:href="@{search(exclusionWord=${word})}" class="text-decoration-none">
+									<span class="ms-1 badge border border-dark text-dark rounded">
+													<span th:text="${word}"></span>
+													<i class="fas fa-times ms-2"></i>
+									</span>
+								</a>
+							</th:block>
+						</div>
+						<div>
+							<span class="text-small font-monospace">除外：</span>
+							<th:block th:each="word : ${searchForm.notSearchWords}">
+								<a th:href="@{search(exclusionWord=${word})}" class="text-decoration-none">
+									<span class="ms-1 badge border border-danger text-dark rounded">
+													<span th:text="${word}"></span>
+													<i class="fas fa-times ms-2"></i>
+									</span>
+								</a>
+							</th:block>
+						</div>
+					</th:block>
 				</div>
 				
 				<!-- データが無い場合 -->
@@ -163,7 +180,7 @@
 								<th:block th:unless="${cheat.tagId == null}">
 									<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
 										<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
-										th:style="'background-color: ' + ${tag.color}"></div>
+										th:style="'background-color: ' + ${tag.color}" th:classappend="${tag.fontColor}"></div>
 									</th:block>
 								</th:block>
 								<span th:text="*{title}" class="fs-5 fw-bold"></span>

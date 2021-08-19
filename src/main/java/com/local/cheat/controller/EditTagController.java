@@ -42,7 +42,7 @@ public class EditTagController {
 			mav.setViewName(URL.TEMPLATE_EDIT_TAG);
 		} else {
 			service.update(service.formToModel(form));
-			mav.setViewName(URL.REDIRECT_HOME);
+			mav.setViewName(URL.REDIRECT_LIST_TAG);
 		}
 		return mav;
 	}
@@ -50,7 +50,7 @@ public class EditTagController {
 	@PostMapping("delete")
 	public CheatMAV delete(CheatMAV mav, @ModelAttribute TagForm form) {
 		service.delete(form.getId());
-		mav.setViewName(URL.REDIRECT_HOME);
+		mav.setViewName(URL.REDIRECT_LIST_TAG);
 		return mav;
 	}
 

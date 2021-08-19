@@ -57,6 +57,9 @@ public class HomeController {
 			mav.setViewName(URL.REDIRECT_HOME);
 			return mav;
         }
+		if(StringUtils.isNotEmpty(form.getExclusionWord())) {
+			form.exclusion();
+		}
 		mav.addObject("cheats", service.search(pageable ,form));
 		mav.addObject("tags", tagService.selectAll());
 		mav.addObject("currentUrl", URL.SEARCH_CHEAT);
