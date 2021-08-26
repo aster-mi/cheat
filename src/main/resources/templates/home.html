@@ -150,27 +150,29 @@
 								<input class="d-none" type="text" name="id" th:value="*{id}"></input>
 								<!-- データ操作ボタン -->
 								<div class="dropdown">
-									<button class="btn ml-auto hover-action" type="button"
-										th:id="'MenuButton' + *{id}" data-bs-toggle="dropdown"
-										aria-expanded="false">
-										<i class="fas fa-ellipsis-v text-secondary"></i>
-									</button>
-									<ul class="dropdown-menu"
-										th:aria-labelledby="'MenuButton' + *{id}">
-										<li><button type="submit" formaction="/edit"
-												class="btn btn-link dropdown-item">
-												<i class="fas fa-edit text-secondary p-1"></i>編集
-											</button></li>
-										<li><button type="submit" formaction="/"
-												class="btn btn-link dropdown-item">
-												<i class="fas fa-share text-secondary p-1"></i>共有
-											</button></li>
-										<li><hr class="dropdown-divider"></li>
-										<li><button type="submit" formaction="/delete"
-												class="btn btn-link dropdown-item">
-												<i class="fas fa-trash-alt text-danger p-1"></i>削除
-											</button></li>
-									</ul>
+									<div class="btn-group dropstart">
+										<button class="btn ml-auto hover-action" type="button"
+											th:id="'MenuButton' + *{id}" data-bs-toggle="dropdown"
+											aria-expanded="false">
+											<i class="fas fa-ellipsis-v text-secondary"></i>
+										</button>
+										<ul class="dropdown-menu"
+											th:aria-labelledby="'MenuButton' + *{id}">
+											<li><button type="submit" formaction="/edit"
+													class="btn btn-link dropdown-item">
+													<i class="fas fa-edit text-secondary p-1"></i>編集
+												</button></li>
+											<li><button type="submit" formaction="/"
+													class="btn btn-link dropdown-item">
+													<i class="fas fa-share text-secondary p-1"></i>共有
+												</button></li>
+											<li><hr class="dropdown-divider"></li>
+											<li><button type="submit" formaction="/delete"
+													class="btn btn-link dropdown-item">
+													<i class="fas fa-trash-alt text-danger p-1"></i>削除
+												</button></li>
+										</ul>
+									</div>
 								</div>
 							</form>
 						</div>

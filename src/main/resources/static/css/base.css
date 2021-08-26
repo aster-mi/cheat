@@ -18,6 +18,10 @@ aside {
 
 .dropdown-menu {
 	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .6);
+	transform: none !important;
+}
+.dropdown-menu[style]{
+	right :100% !important;
 }
 
 .btn {
