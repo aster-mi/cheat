@@ -141,10 +141,14 @@
 					</div>
 					<div class="border-top p-3" th:each="cheat : ${cheats}" th:object="${cheat}">
 						<div class="p-1 btn-toolbar justify-content-between">
-							<div class="d-flex">
-								<i class="fas fa-user-circle fa-2x"></i> <span
-									class="ps-1 fw-bold fs-6" th:text="${#httpServletRequest.remoteUser}"></span> <span
-									class="fs-6 text-secondary">@12345678</span>
+							<div>
+								<!-- タグ -->
+								<th:block th:unless="${cheat.tagId == null}">
+									<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
+										<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
+										th:style="'background-color: ' + ${tag.color}" th:classappend="${tag.fontColor}"></div>
+									</th:block>
+								</th:block>
 							</div>
 							<form method="post">
 								<input class="d-none" type="text" name="id" th:value="*{id}"></input>
@@ -178,13 +182,6 @@
 						</div>
 						<div class="col-11 mx-auto">
 							<div class="mb-1">
-								<!-- タグ -->
-								<th:block th:unless="${cheat.tagId == null}">
-									<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
-										<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
-										th:style="'background-color: ' + ${tag.color}" th:classappend="${tag.fontColor}"></div>
-									</th:block>
-								</th:block>
 								<span th:text="*{title}" class="fs-5 fw-bold"></span>
 							</div>
 							<pre class="text-break m-0 detail" th:utext="*{escapeDetail}"></pre>

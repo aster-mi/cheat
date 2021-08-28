@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="ifttt" class="com.local.cheat.config.IFTTTAppendar"/>
+    <root level="error">
+        <appender-ref ref="ifttt"/>
+    </root>
+</configuration>

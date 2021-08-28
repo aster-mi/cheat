@@ -34,10 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login")
 				.permitAll()
 				.and()
+			.rememberMe()
+				.alwaysRemember(true) // 自動ログインを常に有効にする
+				.and()
 			.logout()
 				.permitAll()
 				.and()
-			.csrf().disable(); // TODO csrfトークンがないとPostできないからいったんdisable
+			.csrf().disable() // TODO csrfトークンがないとPostできないからいったんdisable
+			;
 	}
 	
     @Override
