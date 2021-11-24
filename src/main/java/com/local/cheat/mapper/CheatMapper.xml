@@ -17,7 +17,7 @@ and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail n
 <if test="form.tagId != null">
 and (tag_id=#{form.tagId}) 
 </if>
-order by id desc limit #{pageable.pageSize} 
+order by updated_at desc, id desc limit #{pageable.pageSize}
 offset #{pageable.offset}
 </select>
   

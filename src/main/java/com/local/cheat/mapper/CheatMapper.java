@@ -24,7 +24,7 @@ public interface CheatMapper {
 	@Delete("delete from cheat where id=#{id} and user_id=#{userId}")
 	int delete(Integer id, Integer userId);
 	
-	@Select("select * from cheat where user_id=#{userId} order by id desc limit #{pageable.pageSize} offset #{pageable.offset}")
+	@Select("select * from cheat where user_id=#{userId} order by updated_at desc, id desc limit #{pageable.pageSize} offset #{pageable.offset}")
 	List<Cheat> selectAll(Pageable pageable,Integer userId);
 	
 	@Select("select count(*) from cheat where user_id=#{userId}")

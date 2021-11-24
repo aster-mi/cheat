@@ -23,7 +23,7 @@ public interface TagMapper {
 	@Delete("delete from tag where user_id=#{userId} and id=#{id}")
 	int delete(Integer id, Integer userId);
 	
-	@Select("select * from tag where user_id=#{userId}")
+	@Select("select * from tag where user_id=#{userId} order by updated_at desc")
 	List<Tag> selectByUserId(Integer userId);
 	
 	@Select("select * from tag where id=#{id} and user_id=#{userId}")
