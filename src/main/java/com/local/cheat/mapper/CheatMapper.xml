@@ -3,38 +3,38 @@
 
 <mapper namespace="com.local.cheat.mapper.CheatMapper">
 
-<select id="search" resultType="Cheat">
-select * from cheat 
-where user_id=#{userId} 
-<if test="form.q != null">
-<foreach item="q" collection="form.searchWords">
-and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%') 
-</foreach>
-<foreach item="q" collection="form.notSearchWords">
-and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%') 
-</foreach>
-</if>
-<if test="form.tagId != null">
-and (tag_id=#{form.tagId}) 
-</if>
-order by updated_at desc, id desc limit #{pageable.pageSize}
-offset #{pageable.offset}
-</select>
-  
-<select id="searchCount" resultType="int">
-select count(*) from cheat 
-where user_id=#{userId} 
-<if test="form.q != null">
-<foreach item="q" collection="form.searchWords">
-and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%') 
-</foreach>
-<foreach item="q" collection="form.notSearchWords">
-and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%') 
-</foreach>
-</if>
-<if test="form.tagId != null">
-and (tag_id=#{form.tagId})
-</if>
-</select>
+    <select id="search" resultType="Cheat">
+        select * from cheat
+        where user_id=#{userId}
+        <if test="form.q != null">
+            <foreach item="q" collection="form.searchWords">
+                and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%')
+            </foreach>
+            <foreach item="q" collection="form.notSearchWords">
+                and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%')
+            </foreach>
+        </if>
+        <if test="form.tagId != null">
+            and (tag_id=#{form.tagId})
+        </if>
+        order by updated_at desc, id desc limit #{pageable.pageSize}
+        offset #{pageable.offset}
+    </select>
+
+    <select id="searchCount" resultType="int">
+        select count(*) from cheat
+        where user_id=#{userId}
+        <if test="form.q != null">
+            <foreach item="q" collection="form.searchWords">
+                and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%')
+            </foreach>
+            <foreach item="q" collection="form.notSearchWords">
+                and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%')
+            </foreach>
+        </if>
+        <if test="form.tagId != null">
+            and (tag_id=#{form.tagId})
+        </if>
+    </select>
 
 </mapper>
