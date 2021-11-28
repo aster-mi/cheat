@@ -128,9 +128,10 @@
 						<div class="text-secondary">データが存在しないようです</div>
 						<div class="text-secondary">上のボタンからコードを追加してみよう！</div>
 					</div>
-					<div th:if="${@URL.SEARCH_CHEAT.equals(currentUrl)}"></div>
-					<div class="text-secondary"
-						th:text="検索条件に一致する結果は見つかりませんでした">
+					<div th:if="${@URL.SEARCH_CHEAT.equals(currentUrl)}">
+						<div class="text-secondary"
+							th:text="検索条件に一致する結果は見つかりませんでした">
+						</div>
 					</div>
 				</div>
 				<!-- データがある場合 -->
