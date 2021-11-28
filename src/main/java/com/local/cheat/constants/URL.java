@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class URL {
 	
+	// user
+	public static final String SIGNUP = "signup";
+	public static final String CHANGE_PASSWORD = "changepassword";
+	
 	public static final String TEMPLATE_HOME = "home";
 	public static final String TEMPLATE_ADD_CHEAT = "add";
 	public static final String TEMPLATE_EDIT_CHEAT = "edit";

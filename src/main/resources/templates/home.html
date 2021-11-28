@@ -52,10 +52,11 @@
 									class="btn btn-link dropdown-item">
 									<i class="fas fa-edit text-secondary p-1"></i>XXX
 								</button></li>
-							<li><button type="submit" formaction="/"
-									class="btn btn-link dropdown-item">
-									<i class="fas fa-share text-secondary p-1"></i>XXX
-								</button></li>
+							<li>
+								<form th:action="@{/changepassword}" method="get">
+									<input class="btn btn-link dropdown-item" type="submit"
+										th:value="パスワード変更" />
+								</form>
 							<li><hr class="dropdown-divider"></li>
 							<!-- ログアウトボタン -->
 							<li>
