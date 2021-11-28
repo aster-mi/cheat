@@ -3,6 +3,7 @@ package com.local.cheat.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -69,5 +70,15 @@ public class CheatService {
 	
 	public int delete(Integer id) {
 		return mapper.delete(id, session.getUser().getUserId());
+	}
+	
+	public String share(String username ,Integer cheatId, Integer userId) {
+		var key = DigestUtils.sha256Hex(username+cheatId);
+		mapper.share(key,cheatId,userId);
+		return key;
+	}
+	
+	public Cheat selectByShareKey(String shareKey) {
+		return mapper.selectByShareKey(shareKey);
 	}
 }

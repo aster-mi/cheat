@@ -21,6 +21,9 @@ public interface CheatMapper {
 	@Update("update cheat set tag_id=#{tagId}, title=#{title}, code=#{code}, detail=#{detail} where id=#{id} and user_id=#{userId}")
 	void update(Cheat model);
 	
+	@Update("update cheat set share_key=#{shareKey} where id=#{id} and user_id=#{userId}")
+	void share(String shareKey, Integer id, Integer userId);
+	
 	@Delete("delete from cheat where id=#{id} and user_id=#{userId}")
 	int delete(Integer id, Integer userId);
 	
@@ -36,4 +39,7 @@ public interface CheatMapper {
 	
 	@Select("select * from cheat where id=#{id} and user_id=#{userId}")
 	Cheat select(Integer id, Integer userId);
+	
+	@Select("select * from cheat where share_key=#{shareKey}")
+	Cheat selectByShareKey(String shareKey);
 }

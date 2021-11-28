@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head :: head_fragment(title = '共有')">
+</head>
+<body>
+	<!-- nav -->
+	<div th:replace="common/nav :: nav_fragment"></div>
+	<div class="container">
+		<div class="row border border-secondary rounded-pill bg-secondary mb-3 mt-3 mx-auto">
+			<div class="col text-light">
+				<span th:text="作成者：（TODO）" class="fs-5 fw-bold"></span>
+			</div>
+			<div class="col text-light">
+				<span th:text="リンクコピー機能（TODO）" class="fs-5 fw-bold"></span>
+			</div>
+			<div class="col text-light">
+				<span th:text="取り込み機能（TODO）" class="fs-5 fw-bold"></span>
+			</div>
+		</div>
+		<div class="row mx-auto" th:object="${cheat}">
+			<div class="mb-3">
+				<span th:text="*{title}" class="fs-2 fw-bold text-decoration-underline"></span>
+			</div>
+			<pre class="text-break m-0 detail" th:utext="*{escapeDetail}"></pre>
+			<div>
+				<div th:unless="*{code == null || ''.equals(code)}" class="container-fluid p-0 m-0 position-relative">
+					<pre class="m-0 p-1 code prettyprint linenums rounded text-break" th:text="*{code}"></pre>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

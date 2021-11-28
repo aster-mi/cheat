@@ -15,6 +15,7 @@ public class URL {
 	public static final String TEMPLATE_ADD_TAG = "tag/add";
 	public static final String TEMPLATE_EDIT_TAG = "tag/edit";
 	public static final String TEMPLATE_LIST_TAG = "tag/list";
+	public static final String TEMPLATE_SHARE_LINK = "share";
 
 	// redirect
 	public static final String REDIRECT_HOME = "redirect:/";
@@ -23,6 +24,7 @@ public class URL {
 	public static final String REDIRECT_ADD_TAG = "redirect:/tag/add";
 	public static final String REDIRECT_EDIT_TAG = "redirect:/tag/edit";
 	public static final String REDIRECT_LIST_TAG = "redirect:/tag/list";
+	public static final String REDIRECT_SHARE_LINK_BASE = "redirect:/share/link/";
 	
 	// url
 	public static final String HOME = "/";
