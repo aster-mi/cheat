@@ -9,6 +9,7 @@ public class URL {
 	public static final String SIGNUP = "signup";
 	public static final String CHANGE_PASSWORD = "changepassword";
 	
+	// template
 	public static final String TEMPLATE_HOME = "home";
 	public static final String TEMPLATE_ADD_CHEAT = "add";
 	public static final String TEMPLATE_EDIT_CHEAT = "edit";
@@ -16,6 +17,10 @@ public class URL {
 	public static final String TEMPLATE_EDIT_TAG = "tag/edit";
 	public static final String TEMPLATE_LIST_TAG = "tag/list";
 	public static final String TEMPLATE_SHARE_LINK = "share";
+	
+	// admin template
+	public static final String TEMPLATE_ADMIN_TOP = "admin/top";
+	public static final String TEMPLATE_ADMIN_USERLIST = "admin/userlist";
 
 	// redirect
 	public static final String REDIRECT_HOME = "redirect:/";

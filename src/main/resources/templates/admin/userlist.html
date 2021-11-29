@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>ユーザ一覧</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<th>username</th>
+			<th>role</th>
+			<th>create_at</th>
+		</tr>
+		<th:block th:each="user : ${users}" th:object="${user}">
+			<tr>
+				<td th:text="*{username}"></td>
+				<td th:text="*{roleName}"></td>
+				<td th:text="*{createAt}"></td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+</html>
