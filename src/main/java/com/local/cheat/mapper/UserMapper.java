@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.local.cheat.model.User;
+import com.local.cheat.model.UserSet;
 
 @Mapper
 public interface UserMapper {
@@ -17,8 +18,8 @@ public interface UserMapper {
     public User findByUsername(String username);//識別する
     
     // 全ユーザー取得
-    @Select("select * from codeuser")
-    public List<User> selectAll();
+    @Select("select a.*, COALESCE(b.cheats, 0) as cheats from codeuser as a left outer join (select user_id, COUNT(*) AS cheats from cheat group by user_id) as b ON a.user_id = b.user_id;")
+    public List<UserSet> selectAll();
     
     @Insert("insert into codeuser(username, password) values (#{username}, #{password})")
     public void insert(User user);

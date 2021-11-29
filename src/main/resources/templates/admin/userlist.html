@@ -9,12 +9,14 @@
 		<tr>
 			<th>username</th>
 			<th>role</th>
+			<th>cheats</th>
 			<th>create_at</th>
 		</tr>
 		<th:block th:each="user : ${users}" th:object="${user}">
 			<tr>
 				<td th:text="*{username}"></td>
 				<td th:text="*{roleName}"></td>
+				<td th:text="*{cheats}"></td>
 				<td th:text="*{createAt}"></td>
 			</tr>
 		</th:block>

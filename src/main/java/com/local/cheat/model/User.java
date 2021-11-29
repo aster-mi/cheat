@@ -22,8 +22,6 @@ public class User implements UserDetails {
     private String password;
     
     private Integer role;
-    
-    private Timestamp createAt;
 
     private Collection<? extends GrantedAuthority> authorities;
 
