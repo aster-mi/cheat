@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="nav_fragment">
 	<nav class="navbar navbar-light bg-success sticky-top box-shadow-under navbar-expand-md">
 		<div class="container-xl">
@@ -26,10 +27,10 @@
 	</nav>
 	<!-- ハンバーガーの中身 -->
 	<div class="collapse navbar-collapse" id="nav-bar">
-		<div class="navbar-nav">
+		<div class="navbar-nav border pb-3">
 			<!-- 検索 -->
 			<div class="nav-item">
-				<form>
+				<form target="get" action="search">
 					<div class="input-group p-3">
 						<input name="q" class="form-control" type="text"
 							placeholder="Search code..."
@@ -43,10 +44,41 @@
 			</div>
 			<!-- 追加ボタン -->
 			<div class="nav-item d-flex justify-content-center">
-				<a class="btn btn-outline-success rounded-pill m-3 col-6" th:href="@{/add}">
-					<i class="fas fa-plus"></i> <span class="p-3 fw-bold">新規作成</span>
+				<a class="btn btn-outline-success col-10" th:href="@{/add}">
+					<i class="fas fa-plus pe-3"></i> <span class="fw-bold">新規作成</span>
 				</a>
+			</div>
+			<div>
+				<ul>
+					<li class="nav-item d-flex justify-content-center">
+						<a class="btn btn-outline-info mt-1 fw-bold col-10" th:href="@{tag/list}">
+							<i class="fas fa-tags"></i><span class="p-3 fw-bold">タグ一覧</span>
+						</a>
+					</li>
+					<li class="nav-item d-flex justify-content-center" sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="btn btn-outline-danger mt-1 fw-bold col-10" th:href="@{admin}">
+							<i class="fas fa-wrench pe-3"></i>管理画面
+						</a>
+					</li>
+					<li class="nav-item d-flex justify-content-center">
+						<form class="col-10" th:action="@{/changepassword}" method="get">
+							<button class="btn btn-outline-warning mt-1 fw-bold w-100" type="submit">
+							<i class="fas fa-lock pe-3"></i>
+							<span th:text="パスワード変更"></span>
+							</button>
+						</form>
+					<li>
+					<li class="nav-item d-flex justify-content-center">
+						<form class="col-10" th:action="@{/logout}" method="post">
+							<button class="btn btn-outline-secondary mt-1 fw-bold w-100" type="submit">
+								<i class="fas fa-sign-out-alt pe-3"></i>
+								<span th:text="${#httpServletRequest.remoteUser}+'からログアウト'"></span>
+							</button>
+						</form>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
 </th:block>
+</html>

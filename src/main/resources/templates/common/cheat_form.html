@@ -1,6 +1,6 @@
 <th:block xmlns:th="http://www.thymeleaf.org"
 	th:fragment="cheat_form_fragment(buttons)">
-	<div class="container bg-light border rounded m-4 p-3">
+	<div class="container bg-light border rounded p-3 mt-4 mb-4">
 		<form  method="post" th:object="${form}">
 			<div th:if="${errors!=null&&!errors.isEmpty()}"
 				th:each="error : ${errors}">
@@ -13,7 +13,7 @@
 				<input class="form-control form-control-lg"
 					type="text" th:field="*{title}" maxlength='50' placeholder="例）var使用方法" spellcheck="false"></input>
 			</div>
-			<div class="mb-3 col-3">
+			<div class="mb-3 col-4">
 				<label class="form-label fw-bold">タグ</label> <select
 					th:field="*{tagId}" class="form-select"
 					aria-label="Default select example">

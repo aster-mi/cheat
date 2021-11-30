@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
-<head th:replace="common/head :: head_fragment(title = 'HOME')">
+<head th:replace="common/head :: head_fragment(title = 'HOME',links = ~{})">
 </head>
 <body>
 	<!-- nav -->
@@ -17,7 +17,7 @@
 				</a>
 				
 				<!-- タグ一覧 -->
-				<a class="btn btn-outline-secondary rounded-pill mt-3" th:href="@{tag/list}">
+				<a class="btn btn-outline-secondary rounded-pill mt-3 mb-2" th:href="@{tag/list}">
 					<i class="fas fa-tags"></i><span class="p-3 fw-bold">タグ一覧</span>
 				</a>
 				<ul class="list-unstyled">
@@ -73,7 +73,27 @@
 			<!-- 一覧 -->
 			<main class="d-flex flex-column col-md-10 col-12" 
 				th:with="searchTag=${@tagUtil.getTag(tags, searchForm.tagId)}, q=${searchForm.q}">
-				<div th:if="${searchTag!=null||q!=null}" class="d-flex flex-column border bg-light rounded m-2 p-1">
+
+			<!-- スマホ向けタグ一覧 -->
+			<div class="d-md-none">
+				<ul class="horizontal-list mt-1 pb-3 pt-3">
+					<li class="item">
+						<a class="badge rounded-pill text-decoration-none fs-6 bg-secondary" th:href="@{tag/list}">
+							<i class="fas fa-tags"></i><span class="fw-bold">タグ一覧</span>
+						</a>
+					</li>
+					<th:block th:each="tag : ${tags}" th:object="${tag}">
+						<li class="item">
+							<a class="badge rounded-pill text-decoration-none fs-6" th:classappend="*{fontColor}" th:style="'background-color: ' + *{color}" th:href="@{search(tagId=*{id},q=${searchForm.q})}">
+								<span th:text="*{name}"></span>
+							</a>
+						</li>
+					</th:block>
+				</ul>
+			</div>
+			
+			<!-- 検索情報 -->
+			<div th:if="${searchTag!=null||q!=null}" class="d-flex flex-column border bg-light rounded m-2 p-1">
 					<span><i class="fas fa-search text-dark m-auto"></i></span>
 					<div th:if="${searchTag!=null}">
 						<span class="text-small font-monospace">タグ：</span>

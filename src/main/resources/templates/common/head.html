@@ -1,7 +1,9 @@
 <head xmlns:th="http://www.thymeleaf.org"
-	th:fragment="head_fragment(title)">
+	th:fragment="head_fragment(title, links)">
 <meta charset="UTF-8">
 <title th:text="${title}"></title>
+<!-- レスポンシブ -->
+<meta name="viewport" content="width=device-width">
 <!-- favicon -->
 <meta name="msapplication-square70x70logo" th:content="@{/favicons/site-tile-70x70.png}">
 <meta name="msapplication-square150x150logo" th:content="@{/favicons/site-tile-150x150.png}">
@@ -58,11 +60,14 @@
 	integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
 	crossorigin="anonymous"></script>
 <!-- 全画面共通のcssを定義します -->
+<link th:href="@{/css/reset.css}" rel="stylesheet">
 <link th:href="@{/css/base.css}" rel="stylesheet">
 
 <!--/Font Awesome Animation-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.2.1/font-awesome-animation.css" type="text/css" media="all" />
+<!-- 個別 -->
+<th:block th:replace="${links}" />
 <!-- 全画面共通のscriptを定義します -->
 <script
 	src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
