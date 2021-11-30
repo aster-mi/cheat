@@ -47,7 +47,7 @@
 							data-bs-toggle="dropdown" aria-expanded="false"> <i
 							class="fas fa-ellipsis-v fa-sm text-secondary"></i>
 						</a>
-						<ul class="dropdown-menu" aria-labelledby="MenuUser">
+						<ul class="dropdown-menu list-unstyled" aria-labelledby="MenuUser">
 							<li sec:authorize="hasRole('ROLE_ADMIN')">
 								<a class="btn btn-link dropdown-item" th:href="@{admin}" th:text="管理画面"></a>
 							</li>
@@ -76,7 +76,7 @@
 
 			<!-- スマホ向けタグ一覧 -->
 			<div class="d-md-none">
-				<ul class="horizontal-list mt-1 pb-3 pt-3">
+				<ul class="horizontal-list mt-1 pb-3 pt-3 list-unstyled">
 					<li class="item">
 						<a class="badge rounded-pill text-decoration-none fs-6 bg-secondary" th:href="@{tag/list}">
 							<i class="fas fa-tags"></i><span class="fw-bold">タグ一覧</span>
