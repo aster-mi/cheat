@@ -26,8 +26,8 @@
 		</div>
 	</nav>
 	<!-- ハンバーガーの中身 -->
-	<div class="collapse navbar-collapse" id="nav-bar">
-		<div class="navbar-nav border pb-3">
+	<div class="collapse navbar-collapse sticky-top bg-white" id="nav-bar">
+		<div class="navbar-nav border">
 			<!-- 検索 -->
 			<div class="nav-item">
 				<form target="get" action="search">
@@ -77,6 +77,11 @@
 						</form>
 					</li>
 				</ul>
+			</div>
+			<div class="nav-item d-flex justify-content-center">
+				<div class="border border-bottom-0 rounded-top pe-5 ps-5 bg-light" data-bs-toggle="collapse" data-bs-target="#nav-bar" aria-controls="nav-bar" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-angle-up"></i>
+				</div>
 			</div>
 		</div>
 	</div>
