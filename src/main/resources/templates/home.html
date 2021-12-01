@@ -94,7 +94,7 @@
 			
 			<!-- 検索情報 -->
 			<div th:if="${searchTag!=null||q!=null}" class="d-flex flex-column border bg-light rounded m-2 p-1">
-					<span><i class="fas fa-search text-dark m-auto"></i></span>
+					<span><i class="fas fa-search text-dark m-auto"></i>検索</span>
 					<div th:if="${searchTag!=null}">
 						<span class="text-small font-monospace">タグ：</span>
 						<a th:href="@{search(tagId=null, q=${q})}" class="text-decoration-none">
