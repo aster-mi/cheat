@@ -6,17 +6,7 @@
 	<!-- nav -->
 	<div th:replace="common/nav :: nav_fragment"></div>
 	<div class="container">
-		<div class="row border border-secondary rounded-pill bg-secondary mb-3 mt-3 mx-auto">
-			<div class="col text-light">
-				<span th:text="作成者：（TODO）" class="fs-5 fw-bold"></span>
-			</div>
-			<div class="col text-light">
-				<span th:text="リンクコピー機能（TODO）" class="fs-5 fw-bold"></span>
-			</div>
-			<div class="col text-light">
-				<span th:text="取り込み機能（TODO）" class="fs-5 fw-bold"></span>
-			</div>
-		</div>
+		<button type="button" class="btn btn-success fw-bold m-2" th:onclick="copy(location.href)">URLコピー</button>
 		<div class="row mx-auto" th:object="${cheat}">
 			<div class="mb-3">
 				<span th:text="*{title}" class="fs-2 fw-bold text-decoration-underline"></span>
