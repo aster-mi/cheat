@@ -103,6 +103,7 @@
             }
             return Toast;
         })();
+        // セキュリティ上HTTPSでないと機能しない（ローカルでは機能）
         function copy(value) {
             navigator.clipboard.writeText(value);
             new Toast().show("コピーしました!",2000);
