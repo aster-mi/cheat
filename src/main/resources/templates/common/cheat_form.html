@@ -29,6 +29,14 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label fw-bold">コード</label>
+					<script>
+						// テキストエリアに行番号をつける
+						$(function(){
+						  $('.lined').linedtextarea({
+						    selectedLine: 1
+						  });
+						});
+					</script>
 				<textarea class="lined col-12" rows="15" th:field="*{code}" placeholder="例）var myClass = new MyClass();" spellcheck="false"></textarea>
 			</div>
 			<div class="btn-toolbar justify-content-between">
