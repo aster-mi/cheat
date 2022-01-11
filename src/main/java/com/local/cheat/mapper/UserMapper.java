@@ -21,8 +21,8 @@ public interface UserMapper {
     @Select("select a.*, COALESCE(b.cheats, 0) as cheats from codeuser as a left outer join (select user_id, COUNT(*) AS cheats from cheat group by user_id) as b ON a.user_id = b.user_id;")
     public List<UserSet> selectAll();
     
-    @Insert("insert into codeuser(username, password) values (#{username}, #{password})")
-    public void insert(User user);
+    @Select("insert into codeuser(username, password) values (#{username}, #{password}) RETURNING user_id")
+    public Integer insert(User user);
 
     @Update("update codeuser set password=#{password} where user_id=#{userId}")
 	public void updatePassword(User user);

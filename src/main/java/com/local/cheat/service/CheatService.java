@@ -26,6 +26,9 @@ public class CheatService {
 	@Autowired
     protected UserSession session;
 	
+	@Autowired
+	private SettingService settingService;
+	
 	private ModelMapper modelMapper = new ModelMapper();
 	
 	public Cheat formToModel(CheatForm form) {
@@ -65,7 +68,13 @@ public class CheatService {
 	
 	public void update(Cheat cheat) {
 		cheat.setUserId(session.getUser().getUserId());
-		mapper.update(cheat);
+		if(settingService.select().isCheatAutoSort()) {
+			// 並び替え設定ONの場合
+			mapper.update(cheat);
+		}else {
+			// 並び替え設定OFFの場合
+			mapper.updateNotSort(cheat);
+		}
 	}
 	
 	public int delete(Integer id) {

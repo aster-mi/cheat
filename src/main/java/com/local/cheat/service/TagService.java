@@ -20,6 +20,9 @@ public class TagService {
 	@Autowired
     protected UserSession session;
 	
+	@Autowired
+	private SettingService settingService;
+	
 	private ModelMapper modelMapper = new ModelMapper();
 	
 	public Tag formToModel(TagForm form) {
@@ -49,6 +52,12 @@ public class TagService {
 	
 	public void update(Tag tag) {
 		tag.setUserId(session.getUser().getUserId());
-		mapper.update(tag);
+		if(settingService.select().isTagAutoSort()) {
+			// 並び替え設定ONの場合
+			mapper.update(tag);
+		}else {
+			// 並び替え設定OFFの場合
+			mapper.updateNotSort(tag);
+		}
 	}
 }

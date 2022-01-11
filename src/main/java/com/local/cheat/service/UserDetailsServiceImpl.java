@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.local.cheat.constants.UserRole;
 import com.local.cheat.form.ChangePasswordForm;
 import com.local.cheat.form.UserForm;
+import com.local.cheat.mapper.SettingMapper;
 import com.local.cheat.mapper.UserMapper;
 import com.local.cheat.model.User;
 
@@ -28,6 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+    
+    @Autowired
+    private SettingMapper settingMapper;
     
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -66,7 +70,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     	var user = new User(); 
     	user.setPassword(passwordEncoder.encode(form.getPassword()));
     	user.setUsername(form.getUsername());
-    	userMapper.insert(user);
+    	// ユーザー登録
+    	Integer userId = userMapper.insert(user);
+    	// 初期設定データ登録
+    	settingMapper.insert(userId);
     }
     
     public boolean userExist(String username) {

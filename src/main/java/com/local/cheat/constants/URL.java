@@ -8,6 +8,7 @@ public class URL {
 	// user
 	public static final String SIGNUP = "signup";
 	public static final String CHANGE_PASSWORD = "changepassword";
+	public static final String SETTING = "setting";
 	
 	// template
 	public static final String TEMPLATE_HOME = "home";
@@ -38,7 +39,7 @@ public class URL {
 	public static final String EDIT_TAG = "tag/edit";
 	public static final String LIST_TAG = "tag/list";
 	
-	public static final String LINK_REGEX = "(http://|https://){1}[\\w\\.\\-/:]+";
+	public static final String LINK_REGEX = "(http://|https://){1}[\\w\\;\\&\\=\\%\\?\\.\\-/:]+";
 	
 
 }

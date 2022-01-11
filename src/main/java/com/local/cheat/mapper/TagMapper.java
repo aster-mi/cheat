@@ -16,8 +16,11 @@ public interface TagMapper {
 	@Insert("insert into tag(user_id, name, color) values(#{userId}, #{name}, #{color})")
 	void insert(Tag tag);
 	
-	@Update("update tag set user_id=#{userId}, name=#{name}, color=#{color} where id=#{id}")
+	@Update("update tag set user_id=#{userId}, name=#{name}, color=#{color}, updated_at=now() where id=#{id}")
 	void update(Tag tag);
+	
+	@Update("update tag set user_id=#{userId}, name=#{name}, color=#{color} where id=#{id}")
+	void updateNotSort(Tag tag);
 	
 	// TODO CheatレコードのcolorIdを外す必要がある。
 	@Delete("delete from tag where user_id=#{userId} and id=#{id}")
