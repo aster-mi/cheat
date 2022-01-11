@@ -69,6 +69,8 @@
 <th:block th:replace="${links}" />
 <!-- 全画面共通のscriptを定義します -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/jquery-linedtextarea.js}"></script>
+<link th:href="@{/css/jquery-linedtextarea.css}" rel="stylesheet"/>
 <script
 	src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
 	
@@ -116,5 +118,13 @@
             	copy(obj.innerText);
         	}
         }
-    </script>
+	</script>
+	<script>
+	// テキストエリアに行番号をつける
+	$(function(){
+	  $('.lined').linedtextarea({
+	    selectedLine: 1
+	  });
+	});
+	</script>
 </head>
