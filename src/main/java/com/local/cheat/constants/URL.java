@@ -39,7 +39,7 @@ public class URL {
 	public static final String EDIT_TAG = "tag/edit";
 	public static final String LIST_TAG = "tag/list";
 	
-	public static final String LINK_REGEX = "(http://|https://){1}[\\w\\;\\&\\=\\%\\?\\.\\-/:]+";
+	public static final String LINK_REGEX = "(http://|https://){1}[\\w\\#\\;\\&\\=\\%\\?\\.\\-/:]+";
 	
 
 }
