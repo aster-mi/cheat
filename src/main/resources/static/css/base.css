@@ -1,3 +1,7 @@
+body {
+	-webkit-appearance: none;
+	-webkit-text-size-adjust: 100%;
+}
 aside {
 	height: calc(100vh - 100px) !important;
 	top: 71px !important;
@@ -103,4 +107,16 @@ table {
 .linedwrap{
 	border-radius: 0.3rem!important;
 	border: 1px solid #ced4da!important;
+	height: 255px;
+    background-color: #333 !important;
+}
+.linedtextarea{
+	position: absolute;
+	margin-left: 30px!important;
+}
+.lined {
+  border-color: #000!important;
+  outline: none;
+  color: #fff;
+  background-color: #333 !important;
 }
