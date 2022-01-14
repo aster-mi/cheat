@@ -11,13 +11,31 @@
 			<div class="mb-3">
 				<span th:text="*{title}" class="fs-2 fw-bold text-decoration-underline"></span>
 			</div>
-			<pre class="text-break m-0 detail" th:utext="*{escapeDetail}"></pre>
-			<div>
-				<div th:unless="*{code == null || ''.equals(code)}" class="container-fluid p-0 m-0 position-relative">
-					<pre class="m-0 p-1 code prettyprint linenums rounded text-break" th:text="*{code}"></pre>
-				</div>
-			</div>
+			<input th:name="detail" type="hidden">
+			<div class="bg-white" id="editor-container" th:text="*{detail}"></div>
 		</div>
 	</div>
+	<script>
+			var quill = new Quill('#editor-container', {
+				modules: {
+					toolbar: false,
+					syntax: true
+				  },
+				  readOnly: true,
+				  theme: 'snow'
+			});
+			
+			// 初期表示
+			window.onload = function(){
+				// JSONのデータをquillに戻す
+				var editor = document.querySelector('#editor-container');
+				if(editor.textContent!==''){
+					try {
+						quill.setContents(JSON.parse(editor.textContent));
+					}catch(e){
+					}
+				}
+			}
+	</script>
 </body>
 </html>

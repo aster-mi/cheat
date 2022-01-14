@@ -1,21 +1,17 @@
-<th:block xmlns:th="http://www.thymeleaf.org"
-	th:fragment="cheat_form_fragment(buttons)">
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="cheat_form_fragment(buttons)">
 	<div class="container bg-light border rounded p-3 mt-4 mb-4">
-		<form  method="post" th:object="${form}">
-			<div th:if="${errors!=null&&!errors.isEmpty()}"
-				th:each="error : ${errors}">
-				<div class="alert alert-danger m-1 p-2"
-					th:text="${error.getDefaultMessage()}"></div>
+		<form method="post" th:object="${form}" id="form">
+			<div th:if="${errors!=null&&!errors.isEmpty()}" th:each="error : ${errors}">
+				<div class="alert alert-danger m-1 p-2" th:text="${error.getDefaultMessage()}"></div>
 			</div>
 			<input type="text" th:field="*{id}" class="d-none"></input>
 			<div class="mb-3 col-8">
-				<label class="form-label fw-bold">タイトル</label><span class="ms-2 badge bg-danger">必須</span>
-				<input class="form-control form-control-lg"
-					type="text" th:field="*{title}" maxlength='50' placeholder="例）var使用方法" spellcheck="false"></input>
+				<label class="form-label fw-bold">タイトル</label><span class="ms-2 badge bg-danger">必須</span> <input
+					class="form-control form-control-lg" type="text" th:field="*{title}" maxlength='50' placeholder="例）var使用方法"
+					spellcheck="false"></input>
 			</div>
 			<div class="mb-3 col-4">
-				<label class="form-label fw-bold">タグ</label> <select
-					th:field="*{tagId}" class="form-select"
+				<label class="form-label fw-bold">タグ</label> <select th:field="*{tagId}" class="form-select"
 					aria-label="Default select example">
 					<option value="0" selected>未選択</option>
 					<th:block th:each="tag : ${tags}">
@@ -23,22 +19,75 @@
 					</th:block>
 				</select>
 			</div>
-			<div class="mb-3">
-				<label class="form-label fw-bold text-">詳細</label>
-				<textarea class="form-control" rows="6" th:field="*{detail}" placeholder="例）varを型として定義することで右辺から自動で型を判定できる。" spellcheck="false"></textarea>
-			</div>
-			<div class="mb-3">
-				<label class="form-label fw-bold">コード</label>
+			
+			<!-- コード　削除予定 -->
+			<div th:unless="*{code == null || ''.equals(code)}">
+				<div class="mb-3">
+					<label class="form-label fw-bold">コード</label>
+					<div class="bg-danger text-warning fw-bold">完了後この項目の内容は削除されます。</div>
+					<div class="bg-danger text-warning fw-bold">画面下部、内容の欄に移行してください。</div>
 					<script>
-						// テキストエリアに行番号をつける
-						$(function(){
-						  $('.lined').linedtextarea({
-						    selectedLine: 1
-						  });
+							// テキストエリアに行番号をつける
+							$(function(){
+							  $('.lined').linedtextarea({
+							    selectedLine: 1
+							  });
+							});
+						</script>
+					<textarea class="lined col-12" rows="15" th:field="*{code}" placeholder="例）var myClass = new MyClass();"
+						spellcheck="false"></textarea>
+				</div>
+			</div>
+
+			<!-- 詳細 -->
+			<div>
+				<label class="form-label fw-bold">内容</label>
+				<div class="border rounded mb-3">
+					<input th:name="detail" type="hidden">
+					<div class="bg-white" id="editor-container" th:text="*{detail}"></div>
+					<script>
+					var toolbarOptions = [
+						  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+						  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+						  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+						  ['link'],
+						  ['blockquote', 'code-block'],
+						  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+						  [{ 'list': 'ordered'}, { 'list': 'bullet' }]
+						];
+	
+						var quill = new Quill('#editor-container', {
+						  modules: {
+							syntax: true,              // Include syntax module
+						    toolbar: toolbarOptions
+						  },
+						  placeholder: '例）var myClass = new MyClass();',
+						  theme: 'snow',
+						});
+						
+						// 初期表示
+						window.onload = function(){
+							// JSONのデータをquillに戻す
+							var editor = document.querySelector('#editor-container');
+							if(editor.textContent!==''){
+								try {
+									quill.setContents(JSON.parse(editor.textContent));
+								}catch(e){
+								}
+							}
+						}
+						
+						// 送信前にquillの内容をJSONにしてdetailに詰める
+						var form = document.querySelector('#form');
+						form.addEventListener('submit', function(event) {
+							var detail = document.querySelector('input[name=detail]');
+							detail.value = JSON.stringify(quill.getContents());
 						});
 					</script>
-				<textarea class="lined col-12" rows="15" th:field="*{code}" placeholder="例）var myClass = new MyClass();" spellcheck="false"></textarea>
+				</div>
 			</div>
+
+
 			<div class="btn-toolbar justify-content-between">
 				<!-- ボタン -->
 				<th:block th:replace="${buttons}" />

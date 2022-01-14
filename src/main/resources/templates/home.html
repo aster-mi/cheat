@@ -6,7 +6,52 @@
 	<!-- nav -->
 	<div th:replace="common/nav :: nav_fragment"></div>
 
-	<div class="container-xl d-flex flex-row">
+		
+	<div class="container-xl d-flex flex-row" id="contents" style="visibility:hidden;">
+		
+		<input type="hidden" id="dummy">
+		<script>
+			var options = {
+					  modules: {
+						toolbar: false,
+						syntax: true
+					  },
+					  readOnly: true,
+					  theme: 'snow'
+					};
+			var quill = new Quill('#dummy', options);
+			
+			// id元のJSONデータをQuillを介してHTMLに変換する
+			function jsonToHTML(json) {
+				if(json!=''){
+					try {
+						quill.setContents(JSON.parse(json));
+						return quill.root.innerHTML;
+					}catch(e){
+						return '<div>'+json+'</div>';
+					}
+				}
+				return '';
+			}
+			
+			Toast.prototype.show("読み込み中",10000);
+			
+			// code部分の装飾
+			document.addEventListener('DOMContentLoaded', (event) => {
+				// json to html
+				document.querySelectorAll('.ql-content').forEach((el) => {
+					el.outerHTML=jsonToHTML(el.value);
+				});
+				// コードのハイライト
+				document.querySelectorAll('.ql-syntax').forEach((el) => {
+					hljs.highlightElement(el);
+				});
+				document.querySelector('#contents').style.visibility="visible";
+				Toast.prototype.hide();
+				Toast.prototype.show("読み込み完了",100);
+			});
+			
+		</script>
 		
 			<!-- サイドバー -->
 			<aside class="d-none d-md-block col-2 border-end sticky-top">
@@ -158,70 +203,81 @@
 						<span class="text-secondary" th:text="${cheats.number+1}+'/'+${cheats.totalPages}+'ページ'"></span>
 					     <span class="text-secondary" th:text="'（全'+${cheats.totalElements}+'件）'"></span>
 					</div>
-					<div class="border-top p-3" th:each="cheat : ${cheats}" th:object="${cheat}">
-						<div class="p-1 btn-toolbar justify-content-between">
-							<div>
-								<!-- タグ -->
-								<th:block th:unless="${cheat.tagId == null}">
-									<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
-										<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
-										th:style="'background-color: ' + ${tag.color}" th:classappend="${tag.fontColor}"></div>
+					<div class="border-top pt-1 pb-1" th:each="cheat : ${cheats}" th:object="${cheat}">
+						<div class="float">
+								<div class="col-2 badge-space">
+									<th:block th:unless="${cheat.tagId == null}">
+										<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
+											<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
+											th:style="'background-color: ' + ${tag.color}" th:classappend="${tag.fontColor}"></div>
+										</th:block>
 									</th:block>
-								</th:block>
+								</div>
+							    <!-- タイトルバー -->
+								<div class="btn-toolbar rounded bg-dark-green">
+									<!-- タイトル -->
+									<div class="title-flame col-11 p-1">
+										<span th:text="*{title}" class="fw-bold text-white title ms-2"></span>
+									</div>
+									<form method="post" class="col-1">
+										<input class="d-none" type="text" name="id" th:value="*{id}"></input>
+										<!-- データ操作ボタン -->
+										<div class="dropdown">
+											<div class="btn-group dropstart">
+												<button class="btn ml-auto hover-action pb-0 pt-0" type="button"
+													th:id="'MenuButton' + *{id}" data-bs-toggle="dropdown"
+													aria-expanded="false">
+													<i class="fas fa-ellipsis-v text-white h-1"></i>
+												</button>
+												<ul class="dropdown-menu"
+													th:aria-labelledby="'MenuButton' + *{id}">
+													<li><button type="submit" formaction="/edit"
+															class="btn btn-link dropdown-item">
+															<i class="fas fa-edit text-secondary me-1"></i>編集
+														</button></li>
+													<li><button type="submit" formaction="/share"
+															class="btn btn-link dropdown-item">
+															<i class="fas fa-share text-secondary me-1"></i>共有
+														</button></li>
+													<li><hr class="dropdown-divider"></li>
+													<li><button type="submit" formaction="/delete"
+															class="btn btn-link dropdown-item">
+															<i class="fas fa-trash-alt text-danger me-1"></i>削除
+														</button></li>
+												</ul>
+											</div>
+										</div>
+									</form>
+								</div>
 							</div>
-							<form method="post">
-								<input class="d-none" type="text" name="id" th:value="*{id}"></input>
-								<!-- データ操作ボタン -->
-								<div class="dropdown">
-									<div class="btn-group dropstart">
-										<button class="btn ml-auto hover-action" type="button"
-											th:id="'MenuButton' + *{id}" data-bs-toggle="dropdown"
-											aria-expanded="false">
-											<i class="fas fa-ellipsis-v text-secondary"></i>
-										</button>
-										<ul class="dropdown-menu"
-											th:aria-labelledby="'MenuButton' + *{id}">
-											<li><button type="submit" formaction="/edit"
-													class="btn btn-link dropdown-item">
-													<i class="fas fa-edit text-secondary me-1"></i>編集
-												</button></li>
-											<li><button type="submit" formaction="/share"
-													class="btn btn-link dropdown-item">
-													<i class="fas fa-share text-secondary me-1"></i>共有
-												</button></li>
-											<li><hr class="dropdown-divider"></li>
-											<li><button type="submit" formaction="/delete"
-													class="btn btn-link dropdown-item">
-													<i class="fas fa-trash-alt text-danger me-1"></i>削除
-												</button></li>
-										</ul>
+							<div class="col-11 mx-auto">
+							
+								<!-- Quill -->
+								<div class="bg-white ql-container ql-snow">
+									<div class="ql-editor p-0">
+										<input type="hidden" class="ql-content" th:value="*{detail}">
 									</div>
 								</div>
-							</form>
-						</div>
-						<div class="col-11 mx-auto">
-							<div class="mb-1">
-								<span th:text="*{title}" class="fs-5 fw-bold"></span>
-							</div>
-							<pre class="text-break m-0 detail" th:utext="*{escapeDetail}"></pre>
-							<div>
-								<div th:unless="*{code == null || ''.equals(code)}" class="container-fluid p-0 m-0 position-relative">
-									<pre
-										class="m-0 p-1 code prettyprint linenums rounded text-break"
-										th:text="*{shortCode}"></pre>
-									<th:block th:if="*{codeOverflow}">
-										<div
-											th:replace="common/modal :: modal_fragment(body = ~{::.fullcode},id = *{id})">
-											<pre
-												class="p-1 code fullcode prettyprint linenums rounded text-break"
-												th:text="*{code}" th:id="'code'+ *{id}"></pre>
-										</div>
-									</th:block>
+								
+								<div>
+									<div th:unless="*{code == null || ''.equals(code)}" class="container-fluid p-0 m-0 position-relative">
+										<div class="bg-danger text-warning">編集画面を確認してください。</div>
+										<pre
+											class="m-0 p-1 code prettyprint linenums rounded text-break"
+											th:text="*{shortCode}"></pre>
+										<th:block th:if="*{codeOverflow}">
+											<div
+												th:replace="common/modal :: modal_fragment(body = ~{::.fullcode},id = *{id})">
+												<pre
+													class="p-1 code fullcode prettyprint linenums rounded text-break"
+													th:text="*{code}" th:id="'code'+ *{id}"></pre>
+											</div>
+										</th:block>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 				
 				<!-- ページネーション -->
 				<th:block th:if="${cheats != null and cheats.getContent().size() > 0 and cheats.totalPages > 1}">
