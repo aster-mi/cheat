@@ -10,14 +10,21 @@
 					class="form-control form-control-lg" type="text" th:field="*{title}" maxlength='50' placeholder="例）var使用方法"
 					spellcheck="false"></input>
 			</div>
-			<div class="mb-3 col-4">
-				<label class="form-label fw-bold">タグ</label> <select th:field="*{tagId}" class="form-select"
-					aria-label="Default select example">
-					<option value="0" selected>未選択</option>
-					<th:block th:each="tag : ${tags}">
-						<option th:value="${tag.id}" th:text="${tag.name}"></option>
+			<div class="mb-3">
+				<label class="form-label fw-bold">タグ</label>
+				<input th:field="*{tagIds}" type="hidden">
+				<div id="relation" class="p-1 bg-white border rounded">
+					<i class="fas fa-tags"></i>
+				</div>
+				<div id="no-relation" class="m-1">
+					<i class="fas fa-stream"></i>
+					<th:block th:each="tag : ${tags}" th:object="${tag}">
+							<div class="btn badge rounded-pill fs-6 tag" th:classappend="*{fontColor}" th:style="'background-color: ' + *{color}">
+								<input type="hidden" th:value="*{id}" th:id="*{'tag-'+id}">
+								<span th:text="*{name}"></span>
+							</div>
 					</th:block>
-				</select>
+				</div>
 			</div>
 			
 			<!-- コード　削除予定 -->
@@ -65,6 +72,16 @@
 						  theme: 'snow',
 						});
 						
+						// タグ移動イベント
+						$('.tag').on('click', function() {
+						  const parentId = $(this).parent().attr('id');
+						  if('no-relation'==parentId){
+							  $(this).appendTo('#relation');
+						  }else{
+							  $(this).appendTo('#no-relation');
+						  }
+						});
+						
 						// 初期表示
 						window.onload = function(){
 							// JSONのデータをquillに戻す
@@ -75,13 +92,25 @@
 								}catch(e){
 								}
 							}
+							// 紐づきのあるタグを移動
+							var idList = $('#tagIds').val().split(',');
+							$.each(idList, function() {
+								$("#tag-"+this).parent().appendTo('#relation');
+							})
 						}
 						
-						// 送信前にquillの内容をJSONにしてdetailに詰める
+						// 送信前
 						var form = document.querySelector('#form');
 						form.addEventListener('submit', function(event) {
+							// quillの内容をJSONにしてdetailに詰める
 							var detail = document.querySelector('input[name=detail]');
 							detail.value = JSON.stringify(quill.getContents());
+							// タグをカンマ区切りで設定
+							var tagIds=[];
+							$('#relation').find('input').each(function() {
+								tagIds.push(this.value);
+							});
+							$('#tagIds').val(tagIds.join(','));
 						});
 					</script>
 				</div>

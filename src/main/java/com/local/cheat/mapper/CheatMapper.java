@@ -15,13 +15,13 @@ import com.local.cheat.model.Cheat;
 @Mapper
 public interface CheatMapper {
 
-	@Insert("insert into cheat(user_id, tag_id, title, code, detail) values(#{userId},#{tagId}, #{title}, #{code}, #{detail})")
+	@Insert("insert into cheat(user_id, tag_ids, title, code, detail) values(#{userId},#{tagIds}, #{title}, #{code}, #{detail})")
 	void insert(Cheat model);
 	
-	@Update("update cheat set tag_id=#{tagId}, title=#{title}, code=#{code}, detail=#{detail}, updated_at=now() where id=#{id} and user_id=#{userId}")
+	@Update("update cheat set tag_ids=#{tagIds}, title=#{title}, code=#{code}, detail=#{detail}, updated_at=now() where id=#{id} and user_id=#{userId}")
 	void update(Cheat model);
 	
-	@Update("update cheat set tag_id=#{tagId}, title=#{title}, code=#{code}, detail=#{detail} where id=#{id} and user_id=#{userId}")
+	@Update("update cheat set tag_ids=#{tagIds}, title=#{title}, code=#{code}, detail=#{detail} where id=#{id} and user_id=#{userId}")
 	void updateNotSort(Cheat model);
 	
 	@Update("update cheat set share_key=#{shareKey} where id=#{id} and user_id=#{userId}")

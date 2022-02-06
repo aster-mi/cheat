@@ -15,7 +15,7 @@
             </foreach>
         </if>
         <if test="form.tagId != null">
-            and (tag_id=#{form.tagId})
+            and (tag_ids like '%'||#{form.tagId}||'%')
         </if>
         order by updated_at desc, id desc limit #{pageable.pageSize}
         offset #{pageable.offset}
@@ -33,7 +33,7 @@
             </foreach>
         </if>
         <if test="form.tagId != null">
-            and (tag_id=#{form.tagId})
+            and (tag_ids like '%'||#{form.tagId}||'%')
         </if>
     </select>
 

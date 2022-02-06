@@ -205,9 +205,9 @@
 					</div>
 					<div class="border-top pt-1 pb-1" th:each="cheat : ${cheats}" th:object="${cheat}">
 						<div class="float">
-								<div class="col-2 badge-space">
-									<th:block th:unless="${cheat.tagId == null}">
-										<th:block th:with="tag=${@tagUtil.getTag(tags, cheat.tagId)}">
+								<div class="badge-space">
+									<th:block th:unless="${cheat.tagIdList == null}" th:each="tagId : ${cheat.tagIdList}">
+										<th:block th:with="tag=${@tagUtil.getTag(tags, tagId)}">
 											<div th:unless="${tag == null}" th:text="${tag.name}" class="badge rounded-pill" 
 											th:style="'background-color: ' + ${tag.color}" th:classappend="${tag.fontColor}"></div>
 										</th:block>

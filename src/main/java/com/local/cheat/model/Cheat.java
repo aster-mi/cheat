@@ -1,6 +1,11 @@
 package com.local.cheat.model;
 
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.local.cheat.constants.URL;
 import com.local.cheat.util.EscapeUtil;
 
@@ -14,7 +19,7 @@ public class Cheat {
 
 	private Integer id;
 	private Integer userId;
-	private Integer tagId;
+	private String tagIds;
 	private String title;
 	private String code;
 	private String detail;
@@ -36,6 +41,13 @@ public class Cheat {
 			shortCode += lines[i]+n;
 		}
 		return shortCode;
+	}
+	
+	/*
+	 * タグをリストにして返却 
+	 */
+	public List<String> getTagIdList(){
+		return StringUtils.isEmpty(tagIds)? null : Arrays.asList(tagIds.split(","));
 	}
 	
 }
