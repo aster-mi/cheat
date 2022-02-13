@@ -31,6 +31,7 @@ public class SearchForm {
 		q = null;
 		tagId = null;
 		exclusionWord = null;
+		tagless = false;
 	}
 
 	/**
