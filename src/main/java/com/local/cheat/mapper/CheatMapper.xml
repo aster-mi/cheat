@@ -2,38 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.local.cheat.mapper.CheatMapper">
-
     <select id="search" resultType="Cheat">
-        select * from cheat
-        where user_id=#{userId}
-        <if test="form.q != null">
-            <foreach item="q" collection="form.searchWords">
-                and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%')
-            </foreach>
-            <foreach item="q" collection="form.notSearchWords">
-                and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%')
-            </foreach>
-        </if>
+	    select * from(
+	        select *, regexp_split_to_table(tag_ids, ',') as tags
+	        from cheat
+	        where user_id=#{userId}
+	        <if test="form.q != null">
+	            <foreach item="q" collection="form.searchWords">
+	                and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%')
+	            </foreach>
+	            <foreach item="q" collection="form.notSearchWords">
+	                and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%')
+	            </foreach>
+	        </if>
+	        <if test="form.tagId != null">
+	            and (tag_ids like '%'||#{form.tagId}||'%')
+	        </if>
+        ) as view
+        where 1=1
         <if test="form.tagId != null">
-            and (tag_ids like '%'||#{form.tagId}||'%')
+	            and tags=cast(#{form.tagId} as text)
         </if>
         order by updated_at desc, id desc limit #{pageable.pageSize}
         offset #{pageable.offset}
     </select>
 
     <select id="searchCount" resultType="int">
-        select count(*) from cheat
-        where user_id=#{userId}
-        <if test="form.q != null">
-            <foreach item="q" collection="form.searchWords">
-                and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%')
-            </foreach>
-            <foreach item="q" collection="form.notSearchWords">
-                and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%')
-            </foreach>
-        </if>
+        select count(*) from(
+	        select *, regexp_split_to_table(tag_ids, ',') as tags
+	        from cheat
+	        where user_id=#{userId}
+	        <if test="form.q != null">
+	            <foreach item="q" collection="form.searchWords">
+	                and (title like '%'||#{q}||'%' or code like '%'||#{q}||'%' or detail like '%'||#{q}||'%')
+	            </foreach>
+	            <foreach item="q" collection="form.notSearchWords">
+	                and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%')
+	            </foreach>
+	        </if>
+	        <if test="form.tagId != null">
+	            and (tag_ids like '%'||#{form.tagId}||'%')
+	        </if>
+        ) as view
+        where 1=1
         <if test="form.tagId != null">
-            and (tag_ids like '%'||#{form.tagId}||'%')
+	            and tags=cast(#{form.tagId} as text)
         </if>
     </select>
 
