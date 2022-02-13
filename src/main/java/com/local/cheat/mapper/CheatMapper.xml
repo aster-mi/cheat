@@ -15,13 +15,20 @@
 	                and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%')
 	            </foreach>
 	        </if>
-	        <if test="form.tagId != null">
-	            and (tag_ids like '%'||#{form.tagId}||'%')
+	        <if test="!form.isTagless">
+		        <if test="form.tagId != null">
+		            and (tag_ids like '%'||#{form.tagId}||'%')
+		        </if>
+	        </if>
+	        <if test="form.isTagless">
+	        	and (tag_ids='' or tag_ids is null)
 	        </if>
         ) as view
         where 1=1
-        <if test="form.tagId != null">
-	            and tags=cast(#{form.tagId} as text)
+        <if test="!form.isTagless">
+	        <if test="form.tagId != null">
+		            and tags=cast(#{form.tagId} as text)
+	        </if>
         </if>
         order by updated_at desc, id desc limit #{pageable.pageSize}
         offset #{pageable.offset}
@@ -40,13 +47,20 @@
 	                and (title not like '%'||#{q}||'%' and code not like '%'||#{q}||'%' and detail not like '%'||#{q}||'%')
 	            </foreach>
 	        </if>
-	        <if test="form.tagId != null">
-	            and (tag_ids like '%'||#{form.tagId}||'%')
+	        <if test="!form.isTagless">
+		        <if test="form.tagId != null">
+		            and (tag_ids like '%'||#{form.tagId}||'%')
+		        </if>
+	        </if>
+	        <if test="form.isTagless">
+	        	and (tag_ids='' or tag_ids is null)
 	        </if>
         ) as view
         where 1=1
-        <if test="form.tagId != null">
-	            and tags=cast(#{form.tagId} as text)
+        <if test="!form.isTagless">
+	        <if test="form.tagId != null">
+		            and tags=cast(#{form.tagId} as text)
+	        </if>
         </if>
     </select>
 

@@ -16,6 +16,8 @@ public class SearchForm {
 	private Integer tagId;
 
 	private String exclusionWord;
+	
+	private boolean tagless;
 
 	public String getQ() {
 		return StringUtils.isEmpty(q) ? null : q;
@@ -61,5 +63,5 @@ public class SearchForm {
 		q = buf.toString();
 		exclusionWord = null;
 	}
-
+	
 }

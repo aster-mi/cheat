@@ -132,22 +132,37 @@
 							</a>
 						</li>
 					</th:block>
+					<li class="item">
+						<a class="badge rounded-pill text-decoration-none fs-6 bg-secondary" th:href="@{search(tagId='',q=${searchForm.q},tagless=true)}">
+							<i class="fas fa-tags"></i><span class="fw-bold">タグ未設定</span>
+						</a>
+					</li>
 				</ul>
 			</div>
 			
 			<!-- 検索情報 -->
-			<div th:if="${searchTag!=null||q!=null}" class="d-flex flex-column border bg-light rounded m-2 p-1">
+			<div th:if="${searchTag!=null||q!=null||searchForm.tagless}" class="d-flex flex-column border bg-light rounded m-2 p-1">
 					<span><i class="fas fa-search text-dark m-auto"></i>検索</span>
-					<div th:if="${searchTag!=null}">
-						<span class="text-small font-monospace">タグ：</span>
-						<a th:href="@{search(tagId=null, q=${q})}" class="text-decoration-none">
-							<span class="ms-1 badge rounded-pill" 
-											th:style="'background-color: ' + ${searchTag.color}">
-											<span th:text="${searchTag.name}"></span>
-											<i class="fas fa-times ms-2"></i>
-							</span>
-						</a>
-					</div>
+						<div>
+							<span class="text-small font-monospace">タグ：</span>
+							<th:block th:if="${searchTag!=null}">
+								<a th:href="@{search(tagId=null, q=${q})}" class="text-decoration-none">
+									<span class="ms-1 badge rounded-pill" 
+													th:style="'background-color: ' + ${searchTag.color}">
+													<span th:text="${searchTag.name}"></span>
+													<i class="fas fa-times ms-2"></i>
+									</span>
+								</a>
+							</th:block>
+							<th:block th:if="${searchForm.tagless}">
+								<a th:href="@{search(tagId=null, q=${q}, tagless=false)}" class="text-decoration-none">
+										<span class="ms-1 badge rounded-pill bg-secondary">
+														<span th:text="未設定"></span>
+														<i class="fas fa-times ms-2"></i>
+										</span>
+								</a>
+							</th:block>
+						</div>
 					<th:block th:if="${q!=null}">
 						<div>
 							<span class="text-small font-monospace">含む：</span>

@@ -53,12 +53,15 @@ public class HomeController {
 
 	@GetMapping("search")
 	public CheatMAV search(CheatMAV mav, @PageableDefault(page = 0) Pageable pageable, @Valid SearchForm form, BindingResult result) {
-		if(Objects.isNull(form.getQ())&&Objects.isNull(form.getTagId())){
+		if(Objects.isNull(form.getQ())&&Objects.isNull(form.getTagId())&&!form.isTagless()){
 			mav.setViewName(URL.REDIRECT_HOME);
 			return mav;
         }
 		if(StringUtils.isNotEmpty(form.getExclusionWord())) {
 			form.exclusion();
+		}
+		if(Objects.nonNull(form.getTagId())) {
+			form.setTagless(false);
 		}
 		mav.addObject("cheats", service.search(pageable ,form));
 		mav.addObject("tags", tagService.selectAll());
