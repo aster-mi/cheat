@@ -73,6 +73,9 @@
 						</a></li>
 					</th:block>
 				</ul>
+				<a class="btn btn-outline-secondary rounded-pill mt-3 mb-2"  th:href="@{search(tagId='',q=${searchForm.q},tagless=true)}">
+					<span class="p-3 fw-bold" th:text="タグ未設定"></span>
+				</a>
 				
 				<!-- ユーザー情報 -->
 				<div class="d-flex position-relative align-items-center user-info mt-auto">
